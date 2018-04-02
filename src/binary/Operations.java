@@ -6,7 +6,6 @@ package binary;
  */
 public class Operations {
     
-    
     /**
      *
      * @param bin1 The first binary number

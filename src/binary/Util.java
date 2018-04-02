@@ -6,7 +6,6 @@ package binary;
  */
 public class Util {
 
-
     /**
      *
      * @param num1
