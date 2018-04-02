@@ -13,11 +13,11 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        int value = 1032;
-        boolean[] binaryArray = toBinaryBoolArray(value);
+        int value = 5;
+        int[] binaryArray = toBinaryBoolArray(value);
 
         System.out.println("Hello World");
-        for(boolean item : binaryArray){
+        for(int item : binaryArray){
             System.out.print(item + " ");
         }
         System.out.println(Arrays.toString(binaryArray));
@@ -29,13 +29,13 @@ public class Main {
      * @param bin2 The seconde binary number
      * @return The String with the sum between bin1 and bin2
      */
-    public static boolean[] sumBin(boolean[] bin1, boolean[] bin2) {
+    public static int[] sumBin(int[] bin1, int[] bin2) {
 
-        boolean[] sumBinaryArray = new boolean[bin1.length + bin2.length + 1];
+        int[] sumBinaryArray = new int[bin1.length + bin2.length + 1]; //max entre os 2?
         
-        boolean prox = false;
+        int prox = 0;
         for (int i = 0; i < sumBinaryArray.length; i++) {
-            boolean[] sum = sumBit(bin1[i], bin2[i]);
+            int[] sum = sumBit(bin1[i], bin2[i]);
             prox = sum[0];
             sumBinaryArray[i] = sum[1];
 
@@ -44,16 +44,16 @@ public class Main {
         return null;
     }
 
-    public static boolean[] sumBit(boolean bit1, boolean bit2) {
+    public static int[] sumBit(int bit1, int bit2) {
 
-        if (bit1 == true && bit2 == true) {
-            return new boolean[]{true, false};
-        } else if ((bit1 == true && bit2 == false) || (bit1 == false && bit2 == true)) {
-            return new boolean[]{false, true};
-        } else if (bit1 == false && bit2 == false) {
-            return new boolean[]{false, false};
+        if (bit1 == 1 && bit2 == 1) {
+            return new int[]{1, 0};
+        } else if ((bit1 == 1 && bit2 == 0) || (bit1 == 0 && bit2 == 1)) {
+            return new int[]{0, 1};
+        } else if (bit1 == 0 && bit2 == 0) {
+            return new int[]{0, 0};
         }   
-        return new boolean[]{false, false};
+        return new int[]{0, 0};
     }
 
     /**
@@ -79,16 +79,16 @@ public class Main {
         return Integer.toBinaryString(num).toCharArray();
     }
 
-    public static boolean[] toBinaryBoolArray(char[] binaryCharArray) {
-        boolean[] binaryBoolArray = new boolean[binaryCharArray.length];
+    public static int[] toBinaryArray(char[] binaryCharArray) {
+        int[] binaryArray = new int[binaryCharArray.length];
 
         for (int i = 0; i < binaryCharArray.length; i++) {
             switch (binaryCharArray[i]) {
                 case '1':
-                    binaryBoolArray[i] = true;
+                    binaryArray[i] = 1;
                     break;
                 case '0':
-                    binaryBoolArray[i] = false;
+                    binaryArray[i] = 0;
                     break;
                 default:
                     System.out.println("Deu merda");
@@ -96,12 +96,38 @@ public class Main {
             }
         }
 
-        return binaryBoolArray;
+        return binaryArray;
     }
 
-    public static boolean[] toBinaryBoolArray(int num) {
+    public static int[] toBinaryBoolArray(int num) {
         char[] binaryCharArray = toBinaryCharArray(num);
-        return toBinaryBoolArray(binaryCharArray);
+        return toBinaryArray(binaryCharArray);
     }
-
+    
+    public static int[] complementoDeUm(int [] binaryCharArray){
+        int [] result = new int[binaryCharArray.length];
+        
+        for (int i = 0; i < binaryCharArray.length; i++) {
+            if (binaryCharArray[i]==0) result[i]=1;
+            else result[i]=0;
+        }
+        
+        return result;
+        
+    }
+    
+    public static int[] complementoDeDois (int [] binary){
+            int [] aux = new int[binary.length];
+            int [] one = new int[binary.length];
+            
+            for (int i = 0; i < (one.length-1); i++) {
+                one[i] = 0;
+        }
+            one[(one.length-1)] = 1;
+            
+            aux = complementoDeUm(binary);
+            aux = sumBin(aux,one);
+            
+            return aux;
+    }
 }
