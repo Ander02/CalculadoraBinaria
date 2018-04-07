@@ -1,5 +1,7 @@
 package binary;
 
+import exception.BinaryArrayException;
+
 /**
  *
  * @author Anderson
@@ -22,6 +24,31 @@ public class BinaryInt {
         }
 
         return fullBinaryNumber;
+    }
+
+    public BinaryInt sum(BinaryInt bin) {
+
+        boolean[] thisBin = this.fullBynaryNumber();
+
+        return null;
+    }
+
+    public void normalize(BinaryInt bin1, int length) throws BinaryArrayException {
+
+        if (length < this.length()) {
+            throw new BinaryArrayException("Array");
+        }
+
+        boolean[] aux = new boolean[length];
+
+        for (int i = 0; i < length; i++) {
+
+        }
+        this.binaryNumberWithoutSignal = aux;
+    }
+
+    public static BinaryInt sum(BinaryInt bin1, BinaryInt bin2) {
+        return null;
     }
 
 }

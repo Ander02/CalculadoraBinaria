@@ -64,9 +64,7 @@ public class Util {
                 result[i] = 0;
             }
         }
-
         return result;
-
     }
 
     public static int[] complementoDeDois(int[] binary) {
@@ -82,5 +80,5 @@ public class Util {
         aux = Operations.sumBin(aux, one);
 
         return aux;
-    }    
+    }
 }
