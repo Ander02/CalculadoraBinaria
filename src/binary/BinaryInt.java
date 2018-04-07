@@ -14,7 +14,14 @@ public class BinaryInt {
     }
 
     public boolean[] fullBynaryNumber() {
-        return null;
+        boolean[] fullBinaryNumber = new boolean[this.length()];
+
+        fullBinaryNumber[0] = this.signed;
+        for (int i = 1; i < fullBinaryNumber.length; i++) {
+            fullBinaryNumber[i] = binaryNumberWithoutSignal[i - 1];
+        }
+
+        return fullBinaryNumber;
     }
 
 }
