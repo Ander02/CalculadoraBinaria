@@ -1,6 +1,7 @@
 package binary;
 
 import exception.BinaryArrayException;
+import java.util.Arrays;
 
 /**
  *
@@ -10,15 +11,20 @@ public class BinaryInt {
 
     public boolean signed;
     public boolean[] binaryNumberWithoutSignal;
-    
-    public BinaryInt(int x){
-        if (x>=0){
+
+    public BinaryInt(int x) {
+        if (x >= 0) {
             this.signed = false;
             this.binaryNumberWithoutSignal = Util.toBinaryIntArray(x);
-        }
-        else
+        } else {
             this.signed = true;
-            this.binaryNumberWithoutSignal = Util.complementoDeDois(Util.toBinaryIntArray(Math.abs(x)));
+            //this.binaryNumberWithoutSignal = Util.complementoDeDois(Util.toBinaryIntArray(Math.abs(x)));
+        }
+    }
+
+    public BinaryInt(boolean signed, boolean[] binaryNumberWithoutSignal) {
+        this.signed = signed;
+        this.binaryNumberWithoutSignal = binaryNumberWithoutSignal;
     }
 
     public int length() {
@@ -38,27 +44,61 @@ public class BinaryInt {
 
     public BinaryInt sum(BinaryInt bin) {
 
-        boolean[] thisBin = this.fullBynaryNumber();
+        boolean[] normalized;
+        boolean[] other;
 
-        return null;
+        if (this.length() >= bin.length()) {
+            normalized = bin.normalize(this.length());
+            other = this.fullBynaryNumber();
+        } else {
+            normalized = this.normalize(bin.length());
+            other = bin.fullBynaryNumber();
+        }
+
+        int i = normalized.length - 1;
+        boolean carry = false;
+        boolean[] resp = new boolean[normalized.length];
+        do {
+
+            SumBitAux aux = new SumBitAux(normalized[i], other[i], carry);
+
+            carry = aux.getCarry();
+            resp[i] = aux.getResult();
+            i--;
+        } while (i >= 0);
+
+        return new BinaryInt(false, resp);
     }
 
-    public void normalize(BinaryInt bin1, int length) throws BinaryArrayException {
+    public boolean[] normalize(int length) {
 
-        if (length < this.length()) {
-            throw new BinaryArrayException("Array");
+        if (length == this.length()) {
+            return this.fullBynaryNumber();
         }
 
-        boolean[] aux = new boolean[length];
+        boolean[] normalizedBin = new boolean[length];
 
-        for (int i = 0; i < length; i++) {
-
+        int i;
+        for (i = 0; i < length - this.length(); i++) {
+            normalizedBin[i] = false;
         }
-        this.binaryNumberWithoutSignal = aux;
+
+        for (int j = i; j < length; j++) {
+            System.out.println("i " + i);
+            System.out.println("j " + j);
+            normalizedBin[j] = this.binaryNumberWithoutSignal[j - i];
+        }
+
+        return normalizedBin;
     }
 
     public static BinaryInt sum(BinaryInt bin1, BinaryInt bin2) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(this.fullBynaryNumber());
     }
 
 }

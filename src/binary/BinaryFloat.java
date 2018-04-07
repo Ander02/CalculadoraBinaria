@@ -11,5 +11,9 @@ package binary;
  */
 public class BinaryFloat extends BinaryInt {
     public boolean[] exp;
+
+    public BinaryFloat(int x) {
+        super(x);
+    }
     
 }

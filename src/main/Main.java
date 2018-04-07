@@ -1,5 +1,6 @@
 package main;
 
+import binary.BinaryInt;
 import binary.SumBitAux;
 import binary.Util;
 import java.util.Arrays;
@@ -32,8 +33,12 @@ public class Main {
         System.out.println(new SumBitAux(true, true, true));
         System.out.println("1+1+1");
          */
-        System.out.println(Arrays.toString(Util.toBinaryIntArray(3)));
-        System.out.println(Arrays.toString(Util.toBinaryIntArray(-3)));
+
+        BinaryInt bin = new BinaryInt(1024);
+        BinaryInt bin2 = new BinaryInt(1024);
+
+        System.out.println(bin.sum(bin2));
+        System.out.println(bin.sum(bin2).length());
 
     }
 }

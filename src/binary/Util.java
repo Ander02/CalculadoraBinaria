@@ -54,7 +54,7 @@ public class Util {
         return toBinaryIntArray(binaryCharArray);
     }
 
-    public static boolean[] complementoDeUm(boolean[] binaryBoolArray) {
+    /* public static BinaryInt complementoDeUm(boolean[] binaryBoolArray) {
         boolean[] result = new boolean[binaryBoolArray.length];
 
         for (int i = 0; i < binaryBoolArray.length; i++) {
@@ -64,10 +64,10 @@ public class Util {
                 result[i] = false;
             }
         }
-        return result;
+        return new result;
     }
 
-    public static boolean[] complementoDeDois(boolean[] binary) {
+    public static BinaryInt complementoDeDois(boolean[] binary) {
         boolean[] aux = new boolean[binary.length];
         boolean[] one = new boolean[binary.length];
 
@@ -77,8 +77,10 @@ public class Util {
         one[(one.length - 1)] = true;
 
         aux = complementoDeUm(binary);
-        aux = Operations.sumBin(aux, one);
+        aux = BinaryInt.sum(aux, one);
 
         return aux;
-    }
+    }*/
+    
+
 }
