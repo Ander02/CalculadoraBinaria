@@ -47,45 +47,56 @@ public class BinaryInt {
         boolean[] normalized;
         boolean[] other;
 
-        if (this.length() >= bin.length()) {
-            normalized = bin.normalize(this.length());
-            other = this.fullBynaryNumber();
+        if (this.binaryNumberWithoutSignal.length > bin.binaryNumberWithoutSignal.length) {
+            normalized = bin.normalize(this.binaryNumberWithoutSignal.length);
+            other = this.binaryNumberWithoutSignal;
         } else {
-            normalized = this.normalize(bin.length());
-            other = bin.fullBynaryNumber();
+            normalized = this.normalize(bin.binaryNumberWithoutSignal.length);
+            other = bin.binaryNumberWithoutSignal;
         }
 
-        int i = normalized.length - 1;
-        boolean carry = false;
-        boolean[] resp = new boolean[normalized.length];
-        do {
+        System.out.println("O mesmo:    " + Arrays.toString(other));
+        System.out.println("Normalizado " + Arrays.toString(normalized));
 
+        boolean[] resp = new boolean[normalized.length + 1];
+        boolean carry = false;
+        for (int i = normalized.length - 1; i >= 0; i--) {
             SumBitAux aux = new SumBitAux(normalized[i], other[i], carry);
 
             carry = aux.getCarry();
-            resp[i] = aux.getResult();
-            i--;
-        } while (i >= 0);
+            resp[i + 1] = aux.getResult();
+        }
 
+        if (carry == true) {
+            boolean[] resp2 = new boolean[resp.length + 1];
+            resp2[1] = carry;
+
+            for (int i = 0; i < resp.length-1; i++) {
+                resp2[i + 2] = resp[i];
+            }
+
+            resp = resp2;
+        }
+
+        System.out.println("resposta  : " + Arrays.toString(resp));
+        System.out.println("");
         return new BinaryInt(false, resp);
     }
 
     public boolean[] normalize(int length) {
 
-        if (length == this.length()) {
-            return this.fullBynaryNumber();
+        int originalLength = this.binaryNumberWithoutSignal.length;
+
+        if (length == originalLength) {
+            return this.binaryNumberWithoutSignal;
         }
 
         boolean[] normalizedBin = new boolean[length];
-
         int i;
-        for (i = 0; i < length - this.length(); i++) {
+        for (i = 0; i < length - originalLength; i++) {
             normalizedBin[i] = false;
         }
-
         for (int j = i; j < length; j++) {
-            System.out.println("i " + i);
-            System.out.println("j " + j);
             normalizedBin[j] = this.binaryNumberWithoutSignal[j - i];
         }
 

@@ -33,12 +33,15 @@ public class Main {
         System.out.println(new SumBitAux(true, true, true));
         System.out.println("1+1+1");
          */
-
-        BinaryInt bin = new BinaryInt(1024);
-        BinaryInt bin2 = new BinaryInt(1024);
-
-        System.out.println(bin.sum(bin2));
-        System.out.println(bin.sum(bin2).length());
-
+        
+        for (int i = 0; i < 10; i++) {
+            BinaryInt bin = new BinaryInt(i);
+            System.out.println(i);
+            bin.sum(new BinaryInt(5));
+        }
+        
+        //System.out.println(soma);
+        //System.out.println(soma.sum(bin3));
+        
     }
 }
