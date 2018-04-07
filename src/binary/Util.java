@@ -22,7 +22,7 @@ public class Util {
 
     /**
      *
-     * @param num One int numbem
+     * @param num A õint numbem
      * @return A char array with the binary representation
      */
     public static char[] toBinaryCharArray(int num) {

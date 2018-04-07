@@ -1,5 +1,6 @@
 package main;
 
+import binary.SumBitAux;
 import binary.Util;
 import java.util.Arrays;
 
@@ -11,17 +12,23 @@ public class Main {
 
     /**
      * @param args the command line arguments
-     */ 
+     */
     public static void main(String[] args) {
-
-        int value = 5;
-        int[] binaryArray = Util.toBinaryIntArray(value);
-
-        System.out.println("Hello World");
-        for (int item : binaryArray) {
-            System.out.print(item + " ");
-        }
-        System.out.println("");
-        System.out.println(Arrays.toString(binaryArray));
+        System.out.println(new SumBitAux(false, false, false));
+        System.out.println("0+0+0");
+        System.out.println(new SumBitAux(false, false, true));
+        System.out.println("0+0+1");
+        System.out.println(new SumBitAux(false, true, false));
+        System.out.println("0+1+0");
+        System.out.println(new SumBitAux(false, true, true));
+        System.out.println("0+1+1");
+        System.out.println(new SumBitAux(true, false, false));
+        System.out.println("1+0+0");
+        System.out.println(new SumBitAux(true, false, true));
+        System.out.println("1+0+1");
+        System.out.println(new SumBitAux(true, true, false));
+        System.out.println("1+1+0");
+        System.out.println(new SumBitAux(true, true, true));
+        System.out.println("1+1+1");
     }
 }
