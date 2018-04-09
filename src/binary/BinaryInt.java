@@ -67,16 +67,19 @@ public class BinaryInt {
             resp[i + 1] = aux.getResult();
         }
 
+        resp[0] = carry;
+        /*
         if (carry == true) {
+          resp[0] = true;
             boolean[] resp2 = new boolean[resp.length + 1];
-            resp2[1] = carry;
+            resp2[0] = carry;
 
-            for (int i = 0; i < resp.length-1; i++) {
-                resp2[i + 2] = resp[i];
+            for (int i = 1; i < resp.length; i++) {
+                resp2[i] = resp[i - 1];
             }
 
             resp = resp2;
-        }
+        }*/
 
         System.out.println("resposta  : " + Arrays.toString(resp));
         System.out.println("");
@@ -105,6 +108,27 @@ public class BinaryInt {
 
     public static BinaryInt sum(BinaryInt bin1, BinaryInt bin2) {
         return null;
+    }
+
+    /**
+     * @return The int value representation
+     */
+    public int toInt() {
+        //Não funciona
+        int value = 0;
+
+        int i = this.binaryNumberWithoutSignal.length - 1;
+        while (i >= 0) {
+
+            if (this.binaryNumberWithoutSignal[i] == true) {
+
+                value += (int) Math.pow(2, i);
+            }
+            i--;
+            System.out.println(value);
+        }
+
+        return value;
     }
 
     @Override
