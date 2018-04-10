@@ -1,5 +1,7 @@
 package binary;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Anderson
@@ -54,33 +56,36 @@ public class Util {
         return toBinaryIntArray(binaryCharArray);
     }
 
-    /* public static BinaryInt complementoDeUm(boolean[] binaryBoolArray) {
-        boolean[] result = new boolean[binaryBoolArray.length];
+     public static BinaryInt complementoDeUm(BinaryInt binary) {
+        boolean[] result = new boolean[binary.binaryNumberWithoutSignal.length];
+        BinaryInt aux;
 
-        for (int i = 0; i < binaryBoolArray.length; i++) {
-            if (binaryBoolArray[i] == false) {
-                result[i] = true;
-            } else {
-                result[i] = false;
-            }
+        for (int i = result.length-1; i > 0; i--) {
+            result[i] = !binary.binaryNumberWithoutSignal[i];
+            
         }
-        return new result;
+        
+        
+        if (binary.signed)
+            aux = new BinaryInt(false,result);
+        
+        else
+            aux = new BinaryInt(true,result);
+        
+        
+        
+        
+        return aux;
     }
 
-    public static BinaryInt complementoDeDois(boolean[] binary) {
-        boolean[] aux = new boolean[binary.length];
-        boolean[] one = new boolean[binary.length];
+    public static BinaryInt complementoDeDois(BinaryInt binary) {
+        BinaryInt one = new BinaryInt(1);
+        BinaryInt aux = complementoDeUm(binary);
+        BinaryInt result = aux.sum(one);
 
-        for (int i = 0; i < (one.length - 1); i++) {
-            one[i] = false;
-        }
-        one[(one.length - 1)] = true;
-
-        aux = complementoDeUm(binary);
-        aux = BinaryInt.sum(aux, one);
-
-        return aux;
-    }*/
+        
+        return result;
+    }
     
 
 }

@@ -21,6 +21,11 @@ public class BinaryInt {
             //this.binaryNumberWithoutSignal = Util.complementoDeDois(Util.toBinaryIntArray(Math.abs(x)));
         }
     }
+    
+    public BinaryInt (boolean[] binaryNumberWithoutSignal){
+        this.signed = false;
+        this.binaryNumberWithoutSignal = binaryNumberWithoutSignal;
+    }
 
     public BinaryInt(boolean signed, boolean[] binaryNumberWithoutSignal) {
         this.signed = signed;
@@ -114,21 +119,15 @@ public class BinaryInt {
      * @return The int value representation
      */
     public int toInt() {
-        //Não funciona
-        int value = 0;
-
-        int i = this.binaryNumberWithoutSignal.length - 1;
-        while (i >= 0) {
-
-            if (this.binaryNumberWithoutSignal[i] == true) {
-
-                value += (int) Math.pow(2, i);
+        int toInt = 0;
+        int length = this.binaryNumberWithoutSignal.length-1;
+        
+        for (int i = 0; i <= length ; i++) {
+            if(this.binaryNumberWithoutSignal[i]){
+                toInt += (int) Math.pow(2,(length-i));
             }
-            i--;
-            System.out.println(value);
         }
-
-        return value;
+        return toInt;
     }
 
     @Override
