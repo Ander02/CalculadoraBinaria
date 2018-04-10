@@ -12,7 +12,7 @@ public class BinaryInt {
     public boolean signed;
     public boolean[] binaryNumberWithoutSignal;
 
-    public BinaryInt(int x) {
+    public BinaryInt(int x) { 
         if (x >= 0) {
             this.signed = false;
             this.binaryNumberWithoutSignal = Util.toBinaryIntArray(x);
@@ -38,6 +38,7 @@ public class BinaryInt {
 
     public boolean[] fullBynaryNumber() {
         boolean[] fullBinaryNumber = new boolean[this.length()];
+        boolean[] aux = new boolean[fullBinaryNumber.length-1];
 
         fullBinaryNumber[0] = this.signed;
         for (int i = 1; i < fullBinaryNumber.length; i++) {
@@ -53,11 +54,13 @@ public class BinaryInt {
         boolean[] other;
 
         if (this.binaryNumberWithoutSignal.length > bin.binaryNumberWithoutSignal.length) {
-            normalized = bin.normalize(this.binaryNumberWithoutSignal.length);
-            other = this.binaryNumberWithoutSignal;
+            normalized = bin.normalize(this.binaryNumberWithoutSignal.length+1);
+            other = this.fullBynaryNumber();
+            normalized[0] = bin.signed; other[0] = this.signed;
         } else {
-            normalized = this.normalize(bin.binaryNumberWithoutSignal.length);
-            other = bin.binaryNumberWithoutSignal;
+            normalized = this.normalize(bin.binaryNumberWithoutSignal.length+1);
+            other = bin.fullBynaryNumber();
+            normalized[0] = this.signed; other[0] = bin.signed;
         }
 
         System.out.println("O mesmo:    " + Arrays.toString(other));
@@ -72,7 +75,14 @@ public class BinaryInt {
             resp[i + 1] = aux.getResult();
         }
 
-        resp[0] = carry;
+        
+        boolean[] binAux = new boolean[resp.length-1];
+        for (int i = 0; i < resp.length-1; i++) {
+            binAux[i] = resp[i+1];
+        }
+        
+        bin.signed = resp[0];
+        bin.binaryNumberWithoutSignal = binAux;
         /*
         if (carry == true) {
           resp[0] = true;
@@ -88,7 +98,7 @@ public class BinaryInt {
 
         System.out.println("resposta  : " + Arrays.toString(resp));
         System.out.println("");
-        return new BinaryInt(false, resp);
+        return bin;
     }
 
     public boolean[] normalize(int length) {

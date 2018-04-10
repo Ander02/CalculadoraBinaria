@@ -52,3 +52,13 @@ public class Main {
         //System.out.println(soma.sum(bin3));
     }
 }
+
+/* To do list:
+        Arrumar o construtor binário para numeros negativos. (Só falta arrumar o bit de overflow na resposta do complemento de 2 e tirar o comentario do construtor)
+        Escrever o código da subtração. ( Basicamente é uma soma com o segundo int sendo jogado num novo construtor com o valor negativo e chamar a soma.)
+        Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
+        Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
+
+        PS. Não encontrei nenhum problema nos métodos com os números que eu testei no momento, o NULL pointer exception com numeros negativos se da
+            pelo fato de um arranjo não ser iniciado no construtor pela falta do complemento de 2 não ter sido ajustado ainda.
+*/
