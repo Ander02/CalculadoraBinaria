@@ -1,6 +1,9 @@
 package binary;
 
+import exception.BinaryOverflowException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,36 +59,35 @@ public class Util {
         return toBinaryIntArray(binaryCharArray);
     }
 
-     public static BinaryInt complementoDeUm(BinaryInt binary) {
+    public static BinaryInt complementoDeUm(BinaryInt binary) {
         boolean[] result = new boolean[binary.binaryNumberWithoutSignal.length];
         BinaryInt aux;
 
-        for (int i = result.length-1; i > 0; i--) {
+        for (int i = result.length - 1; i > 0; i--) {
             result[i] = !binary.binaryNumberWithoutSignal[i];
-            
+
         }
-        
-        
-        if (binary.signed)
-            aux = new BinaryInt(false,result);
-        
-        else
-            aux = new BinaryInt(true,result);
-        
-        
-        
-        
+
+        if (binary.signed) {
+            aux = new BinaryInt(false, result);
+        } else {
+            aux = new BinaryInt(true, result);
+        }
+
         return aux;
     }
 
     public static BinaryInt complementoDeDois(BinaryInt binary) {
-        BinaryInt one = new BinaryInt(1);
-        BinaryInt aux = complementoDeUm(binary);
-        BinaryInt result = aux.sum(one);
 
-        
-        return result;
+        try {
+            BinaryInt one = new BinaryInt(1);
+            BinaryInt aux = complementoDeUm(binary);
+            BinaryInt result = aux.sum(one);
+
+            return result;
+        } catch (BinaryOverflowException ex) {
+            return null;
+        }
     }
-    
 
 }
