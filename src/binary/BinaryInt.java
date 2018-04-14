@@ -13,13 +13,9 @@ public class BinaryInt {
     public boolean[] binaryNumberWithoutSignal;
 
     public BinaryInt(int x) { 
-        if (x >= 0) {
             this.signed = false;
-            this.binaryNumberWithoutSignal = Util.toBinaryIntArray(x);
-        } else {
-            this.signed = true;
-            //this.binaryNumberWithoutSignal = Util.complementoDeDois(Util.toBinaryIntArray(Math.abs(x)));
-        }
+            this.binaryNumberWithoutSignal = Util.toBinaryIntArray(Math.abs(x));
+        
     }
     
     public BinaryInt (boolean[] binaryNumberWithoutSignal){
@@ -66,13 +62,13 @@ public class BinaryInt {
         System.out.println("O mesmo:    " + Arrays.toString(other));
         System.out.println("Normalizado " + Arrays.toString(normalized));
 
-        boolean[] resp = new boolean[normalized.length + 1];
+        boolean[] resp = new boolean[normalized.length];
         boolean carry = false;
         for (int i = normalized.length - 1; i >= 0; i--) {
             SumBitAux aux = new SumBitAux(normalized[i], other[i], carry);
 
             carry = aux.getCarry();
-            resp[i + 1] = aux.getResult();
+            resp[i] = aux.getResult();
         }
 
         
@@ -99,6 +95,33 @@ public class BinaryInt {
         System.out.println("resposta  : " + Arrays.toString(resp));
         System.out.println("");
         return bin;
+    }
+    
+    public BinaryInt sub(BinaryInt bin){
+        boolean[] normalized;
+        boolean[] other;
+        
+        BinaryInt aux = new BinaryInt (this.signed,this.binaryNumberWithoutSignal);
+        
+        
+
+        if (this.binaryNumberWithoutSignal.length > bin.binaryNumberWithoutSignal.length) {
+            normalized = bin.normalize(this.binaryNumberWithoutSignal.length+1);
+            other = this.fullBynaryNumber();
+            normalized[0] = bin.signed; other[0] = this.signed;
+        } else {
+            normalized = this.normalize(bin.binaryNumberWithoutSignal.length+1);
+            other = bin.fullBynaryNumber();
+            normalized[0] = this.signed; other[0] = bin.signed;
+        }
+        
+        //if (Arrays.toString(normalized).equals(Arrays.toString(other)))
+            //return new BinaryInt(0);
+        
+        bin = Util.complementoDeDois(bin);
+        bin = bin.sum(aux);
+        
+        return bin;        
     }
 
     public boolean[] normalize(int length) {

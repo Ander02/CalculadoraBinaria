@@ -39,14 +39,17 @@ public class Main {
             bin.sum(new BinaryInt(1)).toInt();
         }*/
         
-        BinaryInt bin = new BinaryInt(5);
-        BinaryInt test = Util.complementoDeUm(bin);
-        BinaryInt test2 = Util.complementoDeDois(bin);
+        BinaryInt bin = new BinaryInt(16);
+        //BinaryInt test = Util.complementoDeUm(bin);
+        //BinaryInt test2 = Util.complementoDeDois(bin);
+        BinaryInt sub = new BinaryInt(5);
+        bin.sum(sub);
         
         System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
-        System.out.println("Complemento de 1: "+Arrays.toString(test.fullBynaryNumber()));
-        System.out.println("Complemento de 2: "+Arrays.toString(test2.fullBynaryNumber()));
-        System.out.println("Numero Original : "+bin.toInt());
+        System.out.println("Teste de Subtração :"+Arrays.toString(sub.fullBynaryNumber()));
+        //System.out.println("Complemento de 1: "+Arrays.toString(test.fullBynaryNumber()));
+        //System.out.println("Complemento de 2: "+Arrays.toString(test2.fullBynaryNumber()));
+        System.out.println("Resposta : "+sub.toInt());
 
         //System.out.println(soma);
         //System.out.println(soma.sum(bin3));
@@ -54,7 +57,7 @@ public class Main {
 }
 
 /* To do list:
-        Arrumar o construtor binário para numeros negativos. (Só falta arrumar o bit de overflow na resposta do complemento de 2 e tirar o comentario do construtor)
+        Corrigir a subtração, atualmente não funciona.
         Escrever o código da subtração. ( Basicamente é uma soma com o segundo int sendo jogado num novo construtor com o valor negativo e chamar a soma.)
         Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
         Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
