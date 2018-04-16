@@ -9,13 +9,12 @@ import java.util.Arrays;
  */
 public class BinaryInt {
 
-    public boolean signed;
-    public boolean[] binaryNumberWithoutSignal;
+    private boolean signed;
+    private boolean[] binaryNumberWithoutSignal;
 
     public BinaryInt(int x) {
         this.signed = false;
         this.binaryNumberWithoutSignal = Util.toBinaryIntArray(Math.abs(x));
-
     }
 
     public BinaryInt(boolean[] binaryNumberWithoutSignal) {
@@ -92,36 +91,19 @@ public class BinaryInt {
     }
 
     public BinaryInt sub(BinaryInt bin) {
-        boolean[] normalized;
-        boolean[] other;
 
-        BinaryInt aux = new BinaryInt(this.signed, this.binaryNumberWithoutSignal);
-
-        if (this.binaryNumberWithoutSignal.length > bin.binaryNumberWithoutSignal.length) {
-            normalized = bin.normalize(this.binaryNumberWithoutSignal.length + 1);
-            other = this.fullBynaryNumber();
-            normalized[0] = bin.signed;
-            other[0] = this.signed;
-        } else {
-            normalized = this.normalize(bin.binaryNumberWithoutSignal.length + 1);
-            other = bin.fullBynaryNumber();
-            normalized[0] = this.signed;
-            other[0] = bin.signed;
-        }
-
-        //if (Arrays.toString(normalized).equals(Arrays.toString(other)))
-        //return new BinaryInt(0);
         try {
-            bin = Util.complementoDeDois(bin);
-            bin = bin.sum(aux);
+            bin = BinaryInt.complementoDeDois(bin);
+            System.out.println(bin);
+            System.out.println(this);
+            BinaryInt resp = bin.sum(this);
 
-            return bin;
+            return resp;
 
         } catch (BinaryOverflowException ex) {
             System.out.println(ex);
             return null;
         }
-
     }
 
     public boolean[] normalize(int length) {
@@ -147,8 +129,52 @@ public class BinaryInt {
         return normalizedBin;
     }
 
-    public static BinaryInt sum(BinaryInt bin1, BinaryInt bin2) {
-        return null;
+    public static BinaryInt complementoDeUm(BinaryInt binary) {
+        boolean[] result = new boolean[binary.binaryNumberWithoutSignal.length];
+
+        BinaryInt aux;
+
+        for (int i = result.length - 1; i > 0; i--) {
+            result[i] = !binary.binaryNumberWithoutSignal[i];
+        }
+        if (binary.signed == true) {
+            aux = new BinaryInt(false, result);
+        } else {
+            aux = new BinaryInt(true, result);
+        }
+        return aux;
+    }
+
+    public BinaryInt complementoDeUm() {
+        boolean[] result = new boolean[this.length() - 1];
+
+        BinaryInt aux;
+
+        for (int i = result.length - 1; i > 0; i--) {
+            result[i] = !this.binaryNumberWithoutSignal[i];
+        }
+        if (this.signed == true) {
+            aux = new BinaryInt(false, result);
+        } else {
+            aux = new BinaryInt(true, result);
+        }
+        return aux;
+    }
+
+    public static BinaryInt complementoDeDois(BinaryInt binary) {
+
+        try {
+
+            //Resolver exception no caso de overflow na soma com 1 para truncar o número
+            BinaryInt one = new BinaryInt(1);
+            BinaryInt aux = complementoDeUm(binary);
+            BinaryInt result = aux.sum(one);
+
+            return result;
+        } catch (BinaryOverflowException ex) {
+            System.out.println(ex);
+            return null;
+        }
     }
 
     /**

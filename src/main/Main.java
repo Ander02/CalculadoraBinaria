@@ -36,31 +36,25 @@ public class Main {
         System.out.println(new SumBitAux(true, true, true));
         System.out.println("1+1+1");
          */
+//
+//        for (int i = 0; i < 20; i++) {
+//            BinaryInt bin = new BinaryInt(i);
+//            try {
+//                BinaryInt res = bin.sum(new BinaryInt(i));
+//                System.out.println("Resposta: " + res.toString() + ": " + res.toInt());
+//                System.out.println("");
+//            } catch (BinaryOverflowException ex) {
+//                System.out.println(ex);
+//            }
+//        }
 
-        for (int i = 0; i < 20; i++) {
-            BinaryInt bin = new BinaryInt(i);
-            try {
-                BinaryInt res = bin.sum(new BinaryInt(i));
-                System.out.println("Resposta: " + res.toString() + ": " + res.toInt());
-                System.out.println("");
-            } catch (BinaryOverflowException ex) {
-                System.out.println(ex);
-            }
-        }
-        //BinaryInt bin = new BinaryInt(16);
-        //BinaryInt test = Util.complementoDeUm(bin);
-        //BinaryInt test2 = Util.complementoDeDois(bin);
-        //BinaryInt sub = new BinaryInt(5);
+        BinaryInt bin1 = new BinaryInt(5);
+        BinaryInt bin2 = new BinaryInt(2);
 
-        //bin.sum(sub);
-        //System.out.println("Array Original:   " + Arrays.toString(bin.fullBynaryNumber()));
-        //System.out.println("Teste de Subtração :" + Arrays.toString(sub.fullBynaryNumber()));
-        //System.out.println("Complemento de 1: "+Arrays.toString(test.fullBynaryNumber()));
-        //System.out.println("Complemento de 2: "+Arrays.toString(test2.fullBynaryNumber()));
-        //System.out.println("Resposta : " + sub.toInt());
-        //System.out.println(soma);
-        //System.out.println(soma.sum(bin3));
+        BinaryInt resp = bin1.sub(bin2);
+        System.out.println(resp + ": " + resp.toInt());
     }
+
 }
 
 /* To do list:
