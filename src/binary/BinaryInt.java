@@ -23,12 +23,16 @@ public class BinaryInt {
         if (x>0){
             this.signed = false;           
             try {
-                this.binaryNumber = BinaryInt.toBinary(Math.abs(x),y);
+                this.binaryNumber = this.toBinary(Math.abs(x),y);
             } 
             catch (BinaryArrayException ex) {
                 System.out.println(ex.message);
             }
         }                             
+    }
+    
+    public BinaryInt(int x){
+        this.binaryNumber = new boolean[x];
     }
     
     public BinaryInt (boolean[] binaryNumber){
@@ -187,7 +191,7 @@ public class BinaryInt {
         return toInt;
     }
 
-    public static boolean[] toBinary(int x,int y) throws BinaryArrayException{
+    public boolean[] toBinary(int x,int y) throws BinaryArrayException{
         boolean[] result = new boolean[y];
         int i = y-1;
         
