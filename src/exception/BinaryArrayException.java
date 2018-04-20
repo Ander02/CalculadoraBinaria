@@ -11,7 +11,7 @@ package exception;
  */
 public class BinaryArrayException extends Exception {
 
-    private String message;
+    public String message;
 
     public BinaryArrayException() {
     }

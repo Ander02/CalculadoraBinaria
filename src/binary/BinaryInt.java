@@ -3,6 +3,7 @@ package binary;
 import exception.BinaryArrayException;
 import java.util.Arrays;
 
+
 /**
  *
  * @author Anderson
@@ -10,26 +11,39 @@ import java.util.Arrays;
 public class BinaryInt {
 
     public boolean signed;
-    public boolean[] binaryNumberWithoutSignal;
-
-    public BinaryInt(int x) { 
-            this.signed = false;
-            this.binaryNumberWithoutSignal = Util.toBinaryIntArray(Math.abs(x));
+    public boolean[] binaryNumber;
+    public int bitSize;
+    
+    public BinaryInt(){
         
     }
+
+    public BinaryInt(int x, int y) {
+        this.bitSize = y;
+        if (x>0){
+            this.signed = false;           
+            try {
+                this.binaryNumber = BinaryInt.toBinary(Math.abs(x),y);
+            } 
+            catch (BinaryArrayException ex) {
+                System.out.println(ex.message);
+            }
+        }                             
+    }
     
-    public BinaryInt (boolean[] binaryNumberWithoutSignal){
+    public BinaryInt (boolean[] binaryNumber){
         this.signed = false;
-        this.binaryNumberWithoutSignal = binaryNumberWithoutSignal;
+        this.binaryNumber = binaryNumber;
     }
 
-    public BinaryInt(boolean signed, boolean[] binaryNumberWithoutSignal) {
+    public BinaryInt(boolean signed, boolean[] binaryNumber,int bitSize) {
+        this.bitSize = bitSize;
         this.signed = signed;
-        this.binaryNumberWithoutSignal = binaryNumberWithoutSignal;
+        this.binaryNumber = binaryNumber;
     }
 
     public int length() {
-        return binaryNumberWithoutSignal.length + 1;
+        return binaryNumber.length + 1;
     }
 
     public boolean[] fullBynaryNumber() {
@@ -38,23 +52,27 @@ public class BinaryInt {
 
         fullBinaryNumber[0] = this.signed;
         for (int i = 1; i < fullBinaryNumber.length; i++) {
-            fullBinaryNumber[i] = binaryNumberWithoutSignal[i - 1];
+            fullBinaryNumber[i] = binaryNumber[i - 1];
         }
 
         return fullBinaryNumber;
     }
 
-    public BinaryInt sum(BinaryInt bin) {
+    public BinaryInt sum(BinaryInt bin) throws BinaryArrayException{
 
         boolean[] normalized;
         boolean[] other;
+        boolean overflowTest = false;
+        
+        if (this.signed==false&&bin.signed==false)
+            overflowTest = true;
 
-        if (this.binaryNumberWithoutSignal.length > bin.binaryNumberWithoutSignal.length) {
-            normalized = bin.normalize(this.binaryNumberWithoutSignal.length+1);
+        if (this.binaryNumber.length > bin.binaryNumber.length) {
+            normalized = bin.normalize(this.binaryNumber.length+1);
             other = this.fullBynaryNumber();
             normalized[0] = bin.signed; other[0] = this.signed;
         } else {
-            normalized = this.normalize(bin.binaryNumberWithoutSignal.length+1);
+            normalized = this.normalize(bin.binaryNumber.length+1);
             other = bin.fullBynaryNumber();
             normalized[0] = this.signed; other[0] = bin.signed;
         }
@@ -78,7 +96,10 @@ public class BinaryInt {
         }
         
         bin.signed = resp[0];
-        bin.binaryNumberWithoutSignal = binAux;
+        bin.binaryNumber = binAux;
+        
+        if (resp[0]==true&&overflowTest==true)
+            throw new BinaryArrayException("Overflow Detectado na soma.");
         /*
         if (carry == true) {
           resp[0] = true;
@@ -97,20 +118,23 @@ public class BinaryInt {
         return bin;
     }
     
-    public BinaryInt sub(BinaryInt bin){
+    public BinaryInt sub(BinaryInt bin) throws BinaryArrayException{
         boolean[] normalized;
         boolean[] other;
         
-        BinaryInt aux = new BinaryInt (this.signed,this.binaryNumberWithoutSignal);
+        BinaryInt aux = new BinaryInt (this.signed,this.binaryNumber,this.bitSize);
         
+        //System.out.println("Aux da subtração: "+Arrays.toString(aux.fullBynaryNumber()));
         
+        if(this.binaryNumber==null||bin.binaryNumber==null)
+            throw new BinaryArrayException("O binário esperado não foi criado por algum erro.");
 
-        if (this.binaryNumberWithoutSignal.length > bin.binaryNumberWithoutSignal.length) {
-            normalized = bin.normalize(this.binaryNumberWithoutSignal.length+1);
+        if (this.binaryNumber.length > bin.binaryNumber.length) {
+            normalized = bin.normalize(this.binaryNumber.length+1);
             other = this.fullBynaryNumber();
             normalized[0] = bin.signed; other[0] = this.signed;
         } else {
-            normalized = this.normalize(bin.binaryNumberWithoutSignal.length+1);
+            normalized = this.normalize(bin.binaryNumber.length+1);
             other = bin.fullBynaryNumber();
             normalized[0] = this.signed; other[0] = bin.signed;
         }
@@ -118,7 +142,7 @@ public class BinaryInt {
         //if (Arrays.toString(normalized).equals(Arrays.toString(other)))
             //return new BinaryInt(0);
         
-        bin = Util.complementoDeDois(bin);
+        bin = complementoDeDois(bin);
         bin = bin.sum(aux);
         
         return bin;        
@@ -126,10 +150,10 @@ public class BinaryInt {
 
     public boolean[] normalize(int length) {
 
-        int originalLength = this.binaryNumberWithoutSignal.length;
+        int originalLength = this.binaryNumber.length;
 
         if (length == originalLength) {
-            return this.binaryNumberWithoutSignal;
+            return this.binaryNumber;
         }
 
         boolean[] normalizedBin = new boolean[length];
@@ -138,7 +162,7 @@ public class BinaryInt {
             normalizedBin[i] = false;
         }
         for (int j = i; j < length; j++) {
-            normalizedBin[j] = this.binaryNumberWithoutSignal[j - i];
+            normalizedBin[j] = this.binaryNumber[j - i];
         }
 
         return normalizedBin;
@@ -153,16 +177,79 @@ public class BinaryInt {
      */
     public int toInt() {
         int toInt = 0;
-        int length = this.binaryNumberWithoutSignal.length-1;
+        int length = this.binaryNumber.length-1;
         
         for (int i = 0; i <= length ; i++) {
-            if(this.binaryNumberWithoutSignal[i]){
+            if(this.binaryNumber[i]){
                 toInt += (int) Math.pow(2,(length-i));
             }
         }
         return toInt;
     }
 
+    public static boolean[] toBinary(int x,int y) throws BinaryArrayException{
+        boolean[] result = new boolean[y];
+        int i = y-1;
+        
+        do {
+            //System.out.println(i);
+            //System.out.println(x%2);
+            
+            if (i<0)
+                throw new BinaryArrayException("O numero entrado em binário é maior que a quantidade de bits alocada.");
+            
+            result[i] = x%2==1;
+                        
+            x = x/2;           
+            i--;
+        }while(x!=0);
+        
+        return result;
+    }
+    
+    public BinaryInt complementoDeUm(BinaryInt binary) {
+        boolean[] result = new boolean[binary.binaryNumber.length];
+        BinaryInt aux;
+
+        for (int i = result.length-1; i >= 0; i--) {
+            result[i] = !binary.binaryNumber[i];   
+            //System.out.println(result[i]);
+        }
+        
+        //System.out.println("Array entrado no complemento de 1: "+Arrays.toString(binary.binaryNumber));
+        //System.out.println("Resultado do complemento de 1: "+Arrays.toString(result));
+        
+        
+        if (binary.signed)
+            aux = new BinaryInt(false,result,this.bitSize);
+        
+        else
+            aux = new BinaryInt(true,result,this.bitSize);
+        
+        
+        
+        
+        return aux;
+    }
+
+    public BinaryInt complementoDeDois(BinaryInt binary) {
+        BinaryInt one = new BinaryInt(1,binary.bitSize);
+        BinaryInt aux = complementoDeUm(binary);
+        try {
+            BinaryInt result = aux.sum(one);
+            return result;
+        }
+        catch(BinaryArrayException ex){
+            System.out.println(ex.message);            
+            }
+        
+        return null;
+            
+
+        
+        
+    }
+    
     @Override
     public String toString() {
         return Arrays.toString(this.fullBynaryNumber());

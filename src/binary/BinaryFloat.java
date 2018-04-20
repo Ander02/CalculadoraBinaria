@@ -9,11 +9,21 @@ package binary;
  *
  * @author Vera
  */
-public class BinaryFloat extends BinaryInt {
-    public boolean[] exp;
+public class BinaryFloat extends BinaryInt{
+    public int exp;
 
-    public BinaryFloat(int x) {
-        super(x);
+    public BinaryFloat(double x,int y) {
+        super();
+        
     }
+    
+    public void righShift(){
+        for (int i = binaryNumber.length-2; i <= 0; i++) {
+            this.binaryNumber[i+1] = this.binaryNumber[i];
+        }
+        this.exp++;       
+    } 
+    
+    
     
 }

@@ -4,6 +4,7 @@ import binary.BinaryInt;
 import binary.SumBitAux;
 import binary.Util;
 import java.util.Arrays;
+import exception.BinaryArrayException;
 
 /**
  *
@@ -39,26 +40,49 @@ public class Main {
             bin.sum(new BinaryInt(1)).toInt();
         }*/
         
-        BinaryInt bin = new BinaryInt(16);
+        
+            
+            
+        
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt sub = new BinaryInt(5);
-        bin.sum(sub);
+        BinaryInt bin = new BinaryInt(255,8);
+        BinaryInt sub = new BinaryInt(125,8);
+        try {
+            bin = bin.sub(sub);
+            System.out.println("Depois da subtração: "+Arrays.toString(bin.fullBynaryNumber())+" "+bin.toInt());
+        }
+        catch(BinaryArrayException ex){
+            //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
+            System.out.println(ex.message);
+        }
         
-        System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
-        System.out.println("Teste de Subtração :"+Arrays.toString(sub.fullBynaryNumber()));
+        //System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
+        //System.out.println("Teste de Subtração :"+Arrays.toString(sub.fullBynaryNumber()));
         //System.out.println("Complemento de 1: "+Arrays.toString(test.fullBynaryNumber()));
         //System.out.println("Complemento de 2: "+Arrays.toString(test2.fullBynaryNumber()));
-        System.out.println("Resposta : "+sub.toInt());
+        //System.out.println("Resposta : "+sub.toInt());
 
         //System.out.println(soma);
         //System.out.println(soma.sum(bin3));
+        
+        /*boolean[] bin;
+        try {
+            bin = BinaryInt.toBinary(255,8);
+            System.out.println(Arrays.toString(bin));
+            bin = BinaryInt.toBinary(256, 9);
+            System.out.println(Arrays.toString(bin));
+            bin = BinaryInt.toBinary(256, 8);
+            System.out.println(Arrays.toString(bin));
+        }
+        
+        catch (BinaryArrayException ex){
+                System.out.println(ex.message);
+                }*/
     }
 }
 
 /* To do list:
-        Corrigir a subtração, atualmente não funciona.
-        Escrever o código da subtração. ( Basicamente é uma soma com o segundo int sendo jogado num novo construtor com o valor negativo e chamar a soma.)
         Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
         Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
 
