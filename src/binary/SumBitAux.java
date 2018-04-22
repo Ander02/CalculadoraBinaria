@@ -66,22 +66,6 @@ public class SumBitAux {
             //Carry = 0
             this.setSumResult(false, false);
         }
-
-        /*
-        if (bit1 == true && bit2 == true) {
-            this.result = true;
-            this.result = false;
-        } else if ((bit1 == true && bit2 == false) || (bit1 == false && bit2 == true)) {
-            this.result = true;
-            this.result = false;
-        } else if (bit1 == false && bit2 == false) {
-            this.result = false;
-            this.carry = false;
-        }
-        System.out.println("Caiu aqui??");
-        this.carry = false;
-        this.result = false;
-         */
     }
 
     public boolean getResult() {

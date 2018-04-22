@@ -19,5 +19,11 @@ public class BinaryArrayException extends Exception {
     public BinaryArrayException(String message) {
         this.message = message;
     }
+    
+    @Override
+    public String getMessage()
+    {
+        return this.message;
+    }
 
 }
