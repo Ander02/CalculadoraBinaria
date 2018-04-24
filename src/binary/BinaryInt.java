@@ -12,6 +12,7 @@ public class BinaryInt {
     public boolean signed;
     public boolean[] binaryNumber;
     public int bitSize;
+    
 
     public BinaryInt() {
 
@@ -320,12 +321,25 @@ public class BinaryInt {
     public int toInt() {
         int toInt = 0;
         int length = this.binaryNumber.length - 1;
+        BinaryInt aux;
+        boolean[] result = this.binaryNumber;
+        boolean negativo = false;
+        
+        if(this.signed){
+            aux = complementOfTwo(this);
+            result = aux.binaryNumber;
+            negativo = true;
+        }
 
         for (int i = 0; i <= length; i++) {
-            if (this.binaryNumber[i]) {
+            if (result[i]) {
                 toInt += (int) Math.pow(2, (length - i));
             }
         }
+        
+        if(negativo)
+            return -toInt;
+        
         return toInt;
     }
 

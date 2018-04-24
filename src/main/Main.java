@@ -46,11 +46,11 @@ public class Main {
         
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(11,8);
-        BinaryInt sub = new BinaryInt(90,8);
+        BinaryInt bin = new BinaryInt(4,4);
+        BinaryInt sub = new BinaryInt(5,4);
         try {
-            bin = bin.mult(sub);
-            System.out.println("Depois da multiplicação " + bin + " " + bin.toInt());
+            bin = bin.sub(sub);
+            System.out.println("Depois da subtração " + bin + " " + bin.toInt());
         }
         catch(Exception ex){
             //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
