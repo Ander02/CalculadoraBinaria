@@ -46,8 +46,8 @@ public class Main {
         
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(4,4);
-        BinaryInt sub = new BinaryInt(5,4);
+        BinaryInt bin = new BinaryInt(1,6);
+        BinaryInt sub = new BinaryInt(5,12);
         try {
             bin = bin.sub(sub);
             System.out.println("Depois da subtração " + bin + " " + bin.toInt());
@@ -85,7 +85,9 @@ public class Main {
 /* To do list:
         Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
         Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
-
         PS. Não encontrei nenhum problema nos métodos com os números que eu testei no momento, o NULL pointer exception com numeros negativos se da
             pelo fato de um arranjo não ser iniciado no construtor pela falta do complemento de 2 não ter sido ajustado ainda.
 */
+
+
+

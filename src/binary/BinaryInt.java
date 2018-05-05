@@ -113,11 +113,9 @@ public class BinaryInt {
           resp[0] = true;
             boolean[] resp2 = new boolean[resp.length + 1];
             resp2[0] = carry;
-
             for (int i = 1; i < resp.length; i++) {
                 resp2[i] = resp[i - 1];
             }
-
             resp = resp2;
         }*/
         System.out.println("resposta  : " + Arrays.toString(resp));
