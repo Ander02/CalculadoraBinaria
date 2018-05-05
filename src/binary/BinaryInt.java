@@ -23,7 +23,7 @@ public class BinaryInt {
         if (num > 0) {
             this.signed = false;
             try {
-                this.binaryNumber = this.toBinary(Math.abs(num), bitSize);
+                this.binaryNumber = BinaryInt.toBinary(Math.abs(num), bitSize);
             } catch (BinaryArrayException ex) {
                 System.out.println(ex.message);
             }
@@ -52,7 +52,6 @@ public class BinaryInt {
 
     public boolean[] fullBynaryNumber() {
         boolean[] fullBinaryNumber = new boolean[this.length()];
-        boolean[] aux = new boolean[fullBinaryNumber.length - 1];
 
         fullBinaryNumber[0] = this.signed;
         for (int i = 1; i < fullBinaryNumber.length; i++) {

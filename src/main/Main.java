@@ -1,9 +1,6 @@
 package main;
 
 import binary.BinaryInt;
-import binary.SumBitAux;
-import binary.Util;
-import java.util.Arrays;
 import exception.BinaryArrayException;
 
 /**

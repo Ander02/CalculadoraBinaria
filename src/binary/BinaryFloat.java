@@ -55,7 +55,7 @@ public class BinaryFloat extends BinaryInt {
         double floatPart = x - intPart;
         boolean[] floatPartA = new boolean[y];
         
-        boolean[] intPartA = super.toBinary(intPart,y); //Parte inteira do binário
+        boolean[] intPartA = BinaryInt.toBinary(intPart,y); //Parte inteira do binário
         boolean[] intPartB = new boolean[y];
         int count = 0;
 
