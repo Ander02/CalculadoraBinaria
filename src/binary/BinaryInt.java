@@ -12,6 +12,7 @@ public class BinaryInt {
     public boolean signed;
     public boolean[] binaryNumber;
     public int bitSize;
+    
 
     public BinaryInt() {
 
@@ -19,20 +20,12 @@ public class BinaryInt {
 
     public BinaryInt(int num, int bitSize) {
         this.bitSize = bitSize;
-        if (num >= 0) {
+        if (num > 0) {
             this.signed = false;
             try {
-                this.binaryNumber = BinaryInt.toBinary(Math.abs(num), bitSize);
+                this.binaryNumber = this.toBinary(Math.abs(num), bitSize);
             } catch (BinaryArrayException ex) {
                 System.out.println(ex.message);
-            }
-        } else {
-            //experiência
-            this.signed = true;
-            try {
-                this.binaryNumber = BinaryInt.complementOfTwo(BinaryInt.toBinary(Math.abs(num), bitSize));
-            } catch (Exception e) {
-
             }
         }
     }
@@ -91,9 +84,6 @@ public class BinaryInt {
             other[0] = bin.signed;
         }
 
-        System.out.println("O mesmo:    " + Arrays.toString(other));
-        System.out.println("Normalizado " + Arrays.toString(normalized));
-
         boolean[] resp = new boolean[normalized.length];
         boolean carry = false;
         for (int i = normalized.length - 1; i >= 0; i--) {
@@ -111,25 +101,20 @@ public class BinaryInt {
         if (resp[0] == true && overflowTest == true) {
             throw new BinaryArrayException("Overflow Detectado na soma.");
         }
-
-        bin.signed = resp[0];
-        bin.binaryNumber = binAux;
-
+        
+        BinaryInt ret = new BinaryInt(resp[0], binAux, binAux.length);
+        
         /*
         if (carry == true) {
           resp[0] = true;
             boolean[] resp2 = new boolean[resp.length + 1];
             resp2[0] = carry;
-
             for (int i = 1; i < resp.length; i++) {
                 resp2[i] = resp[i - 1];
             }
-
             resp = resp2;
         }*/
-        System.out.println("resposta  : " + Arrays.toString(resp));
-        System.out.println("");
-        return bin;
+        return ret;
     }
 
     public static boolean[] sumIgnoringOverflow(boolean[] bin1, boolean[] bin2) {
@@ -148,9 +133,6 @@ public class BinaryInt {
             normalized[0] = bin1[0];
             //other[0] = bin2[0];
         }
-
-        System.out.println("O mesmo:    " + Arrays.toString(other));
-        System.out.println("Normalizado " + Arrays.toString(normalized));
 
         boolean[] resp = new boolean[normalized.length];
         boolean carry = false;
@@ -328,12 +310,25 @@ public class BinaryInt {
     public int toInt() {
         int toInt = 0;
         int length = this.binaryNumber.length - 1;
+        BinaryInt aux;
+        boolean[] result = this.binaryNumber;
+        boolean negativo = false;
+        
+        if(this.signed){
+            aux = complementOfTwo(this);
+            result = aux.binaryNumber;
+            negativo = true;
+        }
 
         for (int i = 0; i <= length; i++) {
-            if (this.binaryNumber[i]) {
+            if (result[i]) {
                 toInt += (int) Math.pow(2, (length - i));
             }
         }
+        
+        if(negativo)
+            return -toInt;
+        
         return toInt;
     }
 

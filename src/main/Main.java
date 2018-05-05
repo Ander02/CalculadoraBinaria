@@ -41,12 +41,21 @@ public class Main {
         }*/
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        for (int i = 0; i < 10; i++) {
-            BinaryInt bin = new BinaryInt(i, 4);
-            BinaryInt one = new BinaryInt(1, 1);
+        BinaryInt bin = new BinaryInt(30, 6);
+        BinaryInt bin2 = new BinaryInt(45, 12);
+        BinaryInt res;
+        try {
+            res = bin.sum(bin2);
+            System.out.println("Depois da soma " + res + " " + res.toInt());
 
-            BinaryInt sum = bin.sum(one);
-            System.out.println(sum + ": " + sum.toInt());
+            res = bin.sub(bin2);
+            System.out.println("Depois da subtração " + res + " " + res.toInt());
+
+            res = bin.mult(bin2);
+            System.out.println("Depois da multiplicação " + res + " " + res.toInt());
+        } catch (Exception ex) {
+            //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
+            ex.printStackTrace();
         }
 
         //System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
@@ -75,7 +84,6 @@ public class Main {
 /* To do list:
         Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
         Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
-
         PS. Não encontrei nenhum problema nos métodos com os números que eu testei no momento, o NULL pointer exception com numeros negativos se da
             pelo fato de um arranjo não ser iniciado no construtor pela falta do complemento de 2 não ter sido ajustado ainda.
  */

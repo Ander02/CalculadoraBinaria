@@ -16,8 +16,14 @@ public class BinaryFloat extends BinaryInt {
 
     public int exp;
 
-    public BinaryFloat(double x, int y) {
+    public BinaryFloat(double x,int y) throws BinaryArrayException {        
         super(y);
+        this.bitSize = y;
+        this.binaryNumber = toFloat(x,y);
+        if (x>0){
+            this.signed = false;
+        }
+        
     }
 
     public void righShift() {
@@ -48,25 +54,32 @@ public class BinaryFloat extends BinaryInt {
         int intPart = (int) x;
         double floatPart = x - intPart;
         boolean[] floatPartA = new boolean[y];
-
-        boolean[] intPartA = super.toBinary(intPart, y); //Parte inteira do binário
+        
+        boolean[] intPartA = super.toBinary(intPart,y); //Parte inteira do binário
+        boolean[] intPartB = new boolean[y];
         int count = 0;
 
         while (!intPartA[count]) { //Contador para ver quantos right shifts serão necessários aplicar para retornar o expoente.
             count++;
+    }
+        for (int i = count; i >= 0; i--) {
+            intPartB[i] = intPartA[count-i];
+            rightShift(intPartA);
+            expA++;
         }
-        expA += (count - intPartA.length);
-
+        
         count = 0;
-        while (floatPart != 0 && count <= floatPartA.length - 1) { //Parte quebrada do binário
+        while(floatPart!=0&&count<=floatPartA.length-1){ //Parte quebrada do binário
+            System.out.println(floatPart);
             floatPart *= 2;
-            if (floatPart > 1) {
-                floatPartA[count] = true;
-                floatPart -= 1;
-            } else {
-                floatPartA[count] = false;
-            }
-            count++;
+                if(floatPart>=1){
+                    floatPartA[count] = true;
+                    floatPart -= 1;
+                }
+                else{
+                    floatPartA[count] = false;
+                }
+                count++;
         }
 
         for (int i = 0; i < expA - 128; i++) { //aplicando right shift na parte float para a soma
@@ -77,9 +90,9 @@ public class BinaryFloat extends BinaryInt {
         BinaryInt sum2 = new BinaryInt(false, floatPartA, y);
 
         sum1 = sum1.sum(sum2); //Soma das 2 partes no mesmo nível de expoente.
-
-        this.exp = expA;
-
-        return sum1.binaryNumber;
+        
+        this.exp = expA;        
+        
+        return sum1.binaryNumber;        
     }
 }
