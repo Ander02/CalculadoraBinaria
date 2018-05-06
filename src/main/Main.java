@@ -40,8 +40,10 @@ public class Main {
         }*/
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(15, 8);
-        BinaryInt bin2 = new BinaryInt(4, 8);
+        BinaryInt bin = new BinaryInt(10, 5);
+
+        BinaryInt bin2 = new BinaryInt(10, 5);
+        System.out.println(bin2 + ": " + bin2.toInt());
         BinaryInt res;
         IntDivisionResult divRes;
         try {
