@@ -1,6 +1,7 @@
 package main;
 
 import binary.BinaryInt;
+import binary.IntDivisionResult;
 import exception.BinaryArrayException;
 
 /**
@@ -11,6 +12,7 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws exception.BinaryArrayException
      */
     public static void main(String[] args) throws BinaryArrayException {
         /*
@@ -38,9 +40,10 @@ public class Main {
         }*/
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(30, 6);
-        BinaryInt bin2 = new BinaryInt(45, 12);
+        BinaryInt bin = new BinaryInt(100, 8);
+        BinaryInt bin2 = new BinaryInt(10, 8);
         BinaryInt res;
+        IntDivisionResult divRes;
         try {
             res = bin.sum(bin2);
             System.out.println("Depois da soma " + res + " " + res.toInt());
@@ -50,6 +53,9 @@ public class Main {
 
             res = bin.mult(bin2);
             System.out.println("Depois da multiplicação " + res + " " + res.toInt());
+            
+            divRes = bin.div(bin2);
+            System.out.println(divRes);
         } catch (Exception ex) {
             //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
             ex.printStackTrace();
