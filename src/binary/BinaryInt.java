@@ -253,7 +253,7 @@ public class BinaryInt {
         quocient = quocient.sub(one);
         
         quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
-        aux.binaryNumber = aux.reduce(aux.binaryNumber);
+        aux.binaryNumber = BinaryInt.reduce(aux.binaryNumber);
 
         System.out.println("Resto: " + aux.toInt());
         
