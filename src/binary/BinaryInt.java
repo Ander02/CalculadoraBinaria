@@ -170,7 +170,7 @@ public class BinaryInt {
 
         //if (Arrays.toString(normalized).equals(Arrays.toString(other)))
         //return new BinaryInt(0);
-        bin = complementOfTwo(bin);
+        bin = BinaryInt.complementOfTwo(bin);
         bin = bin.sum(aux);
 
         return bin;
@@ -251,8 +251,12 @@ public class BinaryInt {
 
         aux = aux.sum(bin);
         quocient = quocient.sub(one);
-        System.out.println("Resto: " + aux.toInt());
+        
+        quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
+        aux.binaryNumber = aux.reduce(aux.binaryNumber);
 
+        System.out.println("Resto: " + aux.toInt());
+        
         return new IntDivisionResult(quocient, aux.binaryNumber);
     }
 
@@ -386,7 +390,7 @@ public class BinaryInt {
      * @param binary The BinaryInt object
      * @return The One Complment
      */
-    public BinaryInt complementOfOne(BinaryInt binary) {
+    public static BinaryInt complementOfOne(BinaryInt binary) {
         boolean[] result = new boolean[binary.binaryNumber.length];
         BinaryInt aux;
 
@@ -398,9 +402,9 @@ public class BinaryInt {
         //System.out.println("Array entrado no complemento de 1: "+Arrays.toString(binary.binaryNumber));
         //System.out.println("Resultado do complemento de 1: "+Arrays.toString(result));
         if (binary.signed) {
-            aux = new BinaryInt(false, result, this.bitSize);
+            aux = new BinaryInt(false, result, binary.bitSize);
         } else {
-            aux = new BinaryInt(true, result, this.bitSize);
+            aux = new BinaryInt(true, result, binary.bitSize);
         }
 
         return aux;
@@ -419,7 +423,7 @@ public class BinaryInt {
         return result;
     }
 
-    public BinaryInt complementOfTwo(BinaryInt binary) {
+    public static BinaryInt complementOfTwo(BinaryInt binary) {
         BinaryInt one = new BinaryInt(1, binary.bitSize);
         BinaryInt aux = complementOfOne(binary);
         try {
