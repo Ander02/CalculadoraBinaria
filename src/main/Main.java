@@ -1,6 +1,11 @@
-package main;
+package main; 
 
+import binary.BinaryInt;
+import binary.SumBitAux;
+import binary.Util;
 import java.util.Arrays;
+import exception.BinaryArrayException;
+import binary.BinaryFloat;
 
 /**
  *
@@ -11,123 +16,78 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BinaryArrayException {
+        /*
+        System.out.println(new SumBitAux(false, false, false));
+        System.out.println("0+0+0");
+        System.out.println(new SumBitAux(false, false, true));
+        System.out.println("0+0+1");
+        System.out.println(new SumBitAux(false, true, false));
+        System.out.println("0+1+0");
+        System.out.println(new SumBitAux(false, true, true));
+        System.out.println("0+1+1");
+        System.out.println(new SumBitAux(true, false, false));
+        System.out.println("1+0+0");
+        System.out.println(new SumBitAux(true, false, true));
+        System.out.println("1+0+1");
+        System.out.println(new SumBitAux(true, true, false));
+        System.out.println("1+1+0");
+        System.out.println(new SumBitAux(true, true, true));
+        System.out.println("1+1+1");
+         */
 
-        int value = 5;
-        int[] binaryArray = toBinaryBoolArray(value);
-
-        System.out.println("Hello World");
-        for(int item : binaryArray){
-            System.out.print(item + " ");
-        }
-        System.out.println(Arrays.toString(binaryArray));
-    }
-
-    /**
-     *
-     * @param bin1 The first binary number
-     * @param bin2 The seconde binary number
-     * @return The String with the sum between bin1 and bin2
-     */
-    public static int[] sumBin(int[] bin1, int[] bin2) {
-
-        int[] sumBinaryArray = new int[bin1.length + bin2.length + 1]; //max entre os 2?
+ /*for (int i = 0; i < 10; i++) {
+            BinaryInt bin = new BinaryInt(i);
+            bin.sum(new BinaryInt(1)).toInt();
+        }*/
         
-        int prox = 0;
-        for (int i = 0; i < sumBinaryArray.length; i++) {
-            int[] sum = sumBit(bin1[i], bin2[i]);
-            prox = sum[0];
-            sumBinaryArray[i] = sum[1];
-
-        }
-
-        return null;
-    }
-
-    public static int[] sumBit(int bit1, int bit2) {
-
-        if (bit1 == 1 && bit2 == 1) {
-            return new int[]{1, 0};
-        } else if ((bit1 == 1 && bit2 == 0) || (bit1 == 0 && bit2 == 1)) {
-            return new int[]{0, 1};
-        } else if (bit1 == 0 && bit2 == 0) {
-            return new int[]{0, 0};
-        }   
-        return new int[]{0, 0};
-    }
-
-    /**
-     *
-     * @param num1
-     * @param num2
-     * @return
-     */
-    public static int max(int num1, int num2) {
-        if (num1 >= num2) {
-            return num1;
-        } else {
-            return num2;
-        }
-    }
-
-    /**
-     *
-     * @param num One int numbem
-     * @return A char array with the binary representation
-     */
-    public static char[] toBinaryCharArray(int num) {
-        return Integer.toBinaryString(num).toCharArray();
-    }
-
-    public static int[] toBinaryArray(char[] binaryCharArray) {
-        int[] binaryArray = new int[binaryCharArray.length];
-
-        for (int i = 0; i < binaryCharArray.length; i++) {
-            switch (binaryCharArray[i]) {
-                case '1':
-                    binaryArray[i] = 1;
-                    break;
-                case '0':
-                    binaryArray[i] = 0;
-                    break;
-                default:
-                    System.out.println("Deu merda");
-                    break;
-            }
-        }
-
-        return binaryArray;
-    }
-
-    public static int[] toBinaryBoolArray(int num) {
-        char[] binaryCharArray = toBinaryCharArray(num);
-        return toBinaryArray(binaryCharArray);
-    }
-    
-    public static int[] complementoDeUm(int [] binaryCharArray){
-        int [] result = new int[binaryCharArray.length];
         
-        for (int i = 0; i < binaryCharArray.length; i++) {
-            if (binaryCharArray[i]==0) result[i]=1;
-            else result[i]=0;
+        //System.out.println(Arrays.toString(aux));
+        //BinaryInt test = Util.complementoDeUm(bin);
+        //BinaryInt test2 = Util.complementoDeDois(bin);
+        BinaryInt bin = new BinaryInt(30, 6);
+        BinaryInt bin2 = new BinaryInt(45, 12);
+        BinaryInt res;
+        try {
+            res = bin.sum(bin2);
+            System.out.println("Depois da soma " + res + " " + res.toInt());
+
+            res = bin.sub(bin2);
+            System.out.println("Depois da subtração " + res + " " + res.toInt());
+
+            res = bin.mult(bin2);
+            System.out.println("Depois da multiplicação " + res + " " + res.toInt());
+        } catch (Exception ex) {
+            //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
+            ex.printStackTrace();
+        }
+
+        //System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
+        //System.out.println("Teste de Subtração :"+Arrays.toString(sub.fullBynaryNumber()));
+        //System.out.println("Complemento de 1: "+Arrays.toString(test.fullBynaryNumber()));
+        //System.out.println("Complemento de 2: "+Arrays.toString(test2.fullBynaryNumber()));
+        //System.out.println("Resposta : "+sub.toInt());
+        //System.out.println(soma);
+        //System.out.println(soma.sum(bin3));
+        /*boolean[] bin;
+        try {
+            bin = BinaryInt.toBinary(255,8);
+            System.out.println(Arrays.toString(bin));
+            bin = BinaryInt.toBinary(256, 9);
+            System.out.println(Arrays.toString(bin));
+            bin = BinaryInt.toBinary(256, 8);
+            System.out.println(Arrays.toString(bin));
         }
         
-        return result;
-        
-    }
-    
-    public static int[] complementoDeDois (int [] binary){
-            int [] aux = new int[binary.length];
-            int [] one = new int[binary.length];
-            
-            for (int i = 0; i < (one.length-1); i++) {
-                one[i] = 0;
-        }
-            one[(one.length-1)] = 1;
-            
-            aux = complementoDeUm(binary);
-            aux = sumBin(aux,one);
-            
-            return aux;
+        catch (BinaryArrayException ex){
+                System.out.println(ex.message);
+                }*/
     }
 }
+
+/* To do list:
+        Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
+        Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
+        PS. Não encontrei nenhum problema nos métodos com os números que eu testei no momento, o NULL pointer exception com numeros negativos se da
+            pelo fato de um arranjo não ser iniciado no construtor pela falta do complemento de 2 não ter sido ajustado ainda.
+ */
