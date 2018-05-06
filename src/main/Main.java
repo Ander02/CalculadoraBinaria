@@ -53,9 +53,12 @@ public class Main {
 
             res = bin.mult(bin2);
             System.out.println("Depois da multiplicação " + res + " " + res.toInt());
-            
+
             divRes = bin.div(bin2);
             System.out.println(divRes);
+
+            res = bin.mult(bin2);
+            System.out.println("Depois da multiplicação " + res + " " + res.toInt());
         } catch (Exception ex) {
             //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
             ex.printStackTrace();

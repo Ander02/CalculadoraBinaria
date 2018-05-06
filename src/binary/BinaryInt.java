@@ -102,17 +102,6 @@ public class BinaryInt {
 
         BinaryInt ret = new BinaryInt(resp[0], binAux, binAux.length);
 
-        /*
-        if (carry == true) {
-          resp[0] = true;
-            boolean[] resp2 = new boolean[resp.length + 1];
-            resp2[0] = carry;
-            for (int i = 1; i < resp.length; i++) {
-                resp2[i] = resp[i - 1];
-            }
-            resp = resp2;
-        }
-         */
         return ret;
     }
 
@@ -239,25 +228,27 @@ public class BinaryInt {
 
         BinaryInt one = new BinaryInt(1, 10);
         BinaryInt quocient = new BinaryInt(0, this.length());
-        BinaryInt aux = new BinaryInt();
-        aux.signed = this.signed;
-        aux.binaryNumber = this.binaryNumber;
+        BinaryInt rest = new BinaryInt();
+        
+        rest.signed = this.signed;
+        rest.binaryNumber = this.binaryNumber;
+        
         do {
-            aux = aux.sub(bin);
+            rest = rest.sub(bin);
 
             quocient = quocient.sum(one);
 
-        } while (aux.signed == false);
+        } while (rest.signed == false);
 
-        aux = aux.sum(bin);
+        rest = rest.sum(bin);
         quocient = quocient.sub(one);
         
         quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
-        aux.binaryNumber = BinaryInt.reduce(aux.binaryNumber);
+        rest.binaryNumber = BinaryInt.reduce(rest.binaryNumber);
 
-        System.out.println("Resto: " + aux.toInt());
+        System.out.println("Resto: " + rest.toInt());
         
-        return new IntDivisionResult(quocient, aux.binaryNumber);
+        return new IntDivisionResult(quocient, rest.binaryNumber);
     }
 
     /**
