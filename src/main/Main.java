@@ -3,6 +3,11 @@ package main;
 import binary.BinaryInt;
 import binary.IntDivisionResult;
 import exception.BinaryArrayException;
+import binary.SumBitAux;
+import binary.Util;
+import java.util.Arrays;
+import exception.BinaryArrayException;
+import binary.BinaryFloat;
 
 /**
  *
@@ -40,27 +45,25 @@ public class Main {
         }*/
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(10, 5);
+        BinaryInt bin = new BinaryInt(-4, 7);
 
-        BinaryInt bin2 = new BinaryInt(10, 5);
-        System.out.println(bin2 + ": " + bin2.toInt());
+        BinaryInt bin2 = new BinaryInt(10, 7);
+        //System.out.println(bin2 + ": " + bin2.toInt());
         BinaryInt res;
         IntDivisionResult divRes;
         try {
             res = bin.sum(bin2);
             System.out.println("Depois da soma " + res + " " + res.toInt());
+            System.out.println("Depois da soma " + res + " " + BinaryInt.toInt(res.fullBynaryNumber()));
 
             res = bin.sub(bin2);
             System.out.println("Depois da subtração " + res + " " + res.toInt());
-
             res = bin.mult(bin2);
             System.out.println("Depois da multiplicação " + res + " " + res.toInt());
-
             divRes = bin.div(bin2);
             System.out.println(divRes);
-
-            res = bin.mult(bin2);
-            System.out.println("Depois da multiplicação " + res + " " + res.toInt());
+            //res = bin.mult(bin2);
+            //System.out.println("Depois da multiplicação " + res + " " + res.toInt());
         } catch (Exception ex) {
             //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
             ex.printStackTrace();
