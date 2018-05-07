@@ -42,10 +42,19 @@ public class Main {
         }*/
         
         
+ 
+        BinaryFloat aux = new BinaryFloat(0.55,100);
+        BinaryFloat sum = new BinaryFloat(0.25,100);
+        BinaryFloat res = sum.floatSum(aux);
+        
+        
+        System.out.println("expoente: "+(res.exp-128));
+        System.out.println(Arrays.toString(res.binaryNumber));
+        System.out.println(res.floatToDouble());
         //System.out.println(Arrays.toString(aux));
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(30, 6);
+        /*BinaryInt bin = new BinaryInt(30, 6);
         BinaryInt bin2 = new BinaryInt(45, 12);
         BinaryInt res;
         try {
@@ -60,7 +69,7 @@ public class Main {
         } catch (Exception ex) {
             //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
             ex.printStackTrace();
-        }
+        }*/
 
         //System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
         //System.out.println("Teste de Subtração :"+Arrays.toString(sub.fullBynaryNumber()));
