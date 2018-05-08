@@ -51,18 +51,18 @@ public class BinaryInt {
         this.signed = false;
     }
 
+    /*
     public BinaryInt(boolean[] binaryNumber) {
         this.signed = false;
         this.binaryNumber = binaryNumber;
         this.original = BinaryInt.toInt(binaryNumber);
         this.bitSize = binaryNumber.length;
-    }
-
+    }*/
     public BinaryInt(boolean signed, boolean[] binaryNumber) {
         this.signed = signed;
         this.binaryNumber = binaryNumber;
         this.bitSize = binaryNumber.length;
-        this.original = BinaryInt.toInt(binaryNumber);
+        this.original = BinaryInt.toInt(this.signed, this.binaryNumber);
     }
 
     public int length() {
@@ -90,7 +90,7 @@ public class BinaryInt {
         if (this.signed == false && bin.signed == false) {
             isPositiveSum = true;
         }
-
+        /*
         BinaryInt normalizedObj;
         BinaryInt otherObj;
         if (this.bitSize > bin.bitSize) {
@@ -99,9 +99,8 @@ public class BinaryInt {
         } else {
             normalizedObj = new BinaryInt(this.original, bin.bitSize);
             otherObj = new BinaryInt(bin.original, bin.bitSize);
-        }
+        }*/
 
-        
         if (this.binaryNumber.length > bin.binaryNumber.length) {
             normalized = bin.normalize(this.binaryNumber.length + 1);
             other = this.fullBynaryNumber();
@@ -192,11 +191,13 @@ public class BinaryInt {
 
     public BinaryInt mult(BinaryInt bin) {
 
+        boolean isNegative = this.signed != bin.signed;
+
         int multiplicandoBitSize = this.length();
-        boolean[] multiplicandoBin = this.fullBynaryNumber();
+        boolean[] multiplicandoBin = this.getModule().fullBynaryNumber();
         boolean[] negativeMultiplicandoBin = new boolean[multiplicandoBin.length];
         int multiplicatorBitSize = bin.length();
-        boolean[] multiplicatorBin = bin.fullBynaryNumber();
+        boolean[] multiplicatorBin = bin.getModule().fullBynaryNumber();
 
         boolean[] addVector = new boolean[multiplicandoBitSize + multiplicatorBitSize + 1];
         boolean[] subVector = new boolean[multiplicandoBitSize + multiplicatorBitSize + 1];
@@ -245,8 +246,16 @@ public class BinaryInt {
 
         //ùltimo rigth shift
         productVector = BinaryInt.specialRigthShift(productVector);
+
         productVector = BinaryInt.reduce(productVector);
-        return new BinaryInt(productVector);
+
+        BinaryInt resp = new BinaryInt(false, productVector);
+
+        if (isNegative) {
+            resp = BinaryInt.complementOfTwo(resp);
+        }
+
+        return resp;
     }
 
     /**
@@ -269,26 +278,35 @@ public class BinaryInt {
 
     public IntDivisionResult div(BinaryInt bin) throws BinaryArrayException {
 
+        boolean isNegative = this.signed != bin.signed;
+
         BinaryInt one = new BinaryInt(1, 1);
         BinaryInt quocient = new BinaryInt(0, this.length());
         BinaryInt rest = this.getModule();
+        BinaryInt div = bin.getModule();
 
         do {
-            rest = rest.sub(bin);
+            rest = rest.sub(div);
 
             quocient = quocient.sum(one);
 
         } while (rest.signed == false);
 
-        rest = rest.sum(bin);
+        rest = rest.sum(div);
         quocient = quocient.sub(one);
 
         quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
         rest.binaryNumber = BinaryInt.reduce(rest.binaryNumber);
 
+        if (isNegative) {
+            System.out.println("Is negative");
+            quocient = BinaryInt.complementOfTwo(quocient);
+        }
+
+        System.out.println("Quocient: " + quocient.toInt());
         System.out.println("Resto: " + rest.toInt());
 
-        return new IntDivisionResult(quocient, rest.binaryNumber);
+        return new IntDivisionResult(quocient, rest);
     }
 
     /**
@@ -371,15 +389,13 @@ public class BinaryInt {
         return toInt;
     }
 
-    public static int toInt(boolean[] binary) {
+    public static int toInt(boolean signal, boolean[] binary) {
         int value = 0;
         int length = binary.length - 2;
 
         boolean[] result = binary;
-        boolean negative = binary[0];
-
-        if (negative) {
-            result = BinaryInt.complementOfTwo(binary);
+        if (signal) {
+            result = BinaryInt.complementOfTwo(result);
         }
 
         for (int i = 0; i <= length; i++) {
@@ -387,8 +403,8 @@ public class BinaryInt {
                 value += (int) Math.pow(2, (length - i));
             }
         }
-        System.out.println("");
-        if (negative) {
+
+        if (signal) {
             return -value;
         }
 
@@ -455,7 +471,7 @@ public class BinaryInt {
 
     public static BinaryInt complementOfTwo(BinaryInt binary) {
         BinaryInt one = new BinaryInt(1, binary.bitSize);
-        BinaryInt aux = complementOfOne(binary);
+        BinaryInt aux = BinaryInt.complementOfOne(binary);
         try {
             BinaryInt result = aux.sum(one);
             return result;
@@ -476,7 +492,6 @@ public class BinaryInt {
     public static boolean[] complementOfTwo(boolean[] binary) {
 
         boolean[] one = new boolean[]{true};
-
         return BinaryInt.sumIgnoringOverflow(BinaryInt.complementOfOne(binary), one);
     }
 

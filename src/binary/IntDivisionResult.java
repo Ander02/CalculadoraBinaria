@@ -9,12 +9,12 @@ import java.util.Arrays;
 public class IntDivisionResult {
 
     private BinaryInt quocient;
-    private boolean[] rest;
+    private BinaryInt rest;
 
     public IntDivisionResult() {
     }
 
-    public IntDivisionResult(BinaryInt quocient, boolean[] rest) {
+    public IntDivisionResult(BinaryInt quocient, BinaryInt rest) {
         this.quocient = quocient;
         this.rest = rest;
     }
@@ -27,19 +27,18 @@ public class IntDivisionResult {
         this.quocient = quocient;
     }
 
-    public boolean[] getRest() {
+    public BinaryInt getRest() {
         return rest;
     }
 
-    public void setRest(boolean[] rest) {
+    public void setRest(BinaryInt rest) {
         this.rest = rest;
     }
 
     @Override
     public String toString() {
-        return "Quocient: " + this.quocient + ": " + this.quocient.toInt() +
-             "\nRest: " + Arrays.toString(this.rest);
+        return "Quocient: " + this.quocient + ": " + this.quocient.toInt()
+                + "\nRest: " + this.rest + ":" + this.rest.toInt();
     }
-    
-    
+
 }

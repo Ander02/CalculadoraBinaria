@@ -45,16 +45,15 @@ public class Main {
         }*/
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(-4, 7);
+        BinaryInt bin = new BinaryInt(-7, 7);
 
-        BinaryInt bin2 = new BinaryInt(10, 7);
+        BinaryInt bin2 = new BinaryInt(8, 7);
         //System.out.println(bin2 + ": " + bin2.toInt());
         BinaryInt res;
         IntDivisionResult divRes;
         try {
             res = bin.sum(bin2);
             System.out.println("Depois da soma " + res + " " + res.toInt());
-            System.out.println("Depois da soma " + res + " " + BinaryInt.toInt(res.fullBynaryNumber()));
 
             res = bin.sub(bin2);
             System.out.println("Depois da subtração " + res + " " + res.toInt());
