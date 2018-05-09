@@ -282,6 +282,7 @@ public class BinaryInt {
 
         BinaryInt one = new BinaryInt(1, 1);
         BinaryInt quocient = new BinaryInt(0, this.length());
+        
         BinaryInt rest = this.getModule();
         BinaryInt div = bin.getModule();
 
@@ -295,12 +296,12 @@ public class BinaryInt {
         rest = rest.sum(div);
         quocient = quocient.sub(one);
 
-        quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
-        rest.binaryNumber = BinaryInt.reduce(rest.binaryNumber);
+        //quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
+        //rest.binaryNumber = BinaryInt.reduce(rest.binaryNumber);
 
         if (isNegative) {
-            System.out.println("Is negative");
             quocient = BinaryInt.complementOfTwo(quocient);
+            rest = BinaryInt.complementOfTwo(rest);
         }
 
         System.out.println("Quocient: " + quocient.toInt());
@@ -391,7 +392,7 @@ public class BinaryInt {
 
     public static int toInt(boolean signal, boolean[] binary) {
         int value = 0;
-        int length = binary.length - 2;
+        int length = binary.length - 1;
 
         boolean[] result = binary;
         if (signal) {

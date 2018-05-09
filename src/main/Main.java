@@ -45,9 +45,9 @@ public class Main {
         }*/
         //BinaryInt test = Util.complementoDeUm(bin);
         //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(-7, 7);
+        BinaryInt bin = new BinaryInt(73, 7);
 
-        BinaryInt bin2 = new BinaryInt(8, 7);
+        BinaryInt bin2 = new BinaryInt(-8, 7);
         //System.out.println(bin2 + ": " + bin2.toInt());
         BinaryInt res;
         IntDivisionResult divRes;
