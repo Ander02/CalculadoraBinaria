@@ -207,8 +207,12 @@ public class BinaryInt {
      * @return A new binary number containing the multiplication of this with
      * the binary numeral passed as an argument
      */
-    public BinaryInt mult(BinaryInt bin) {
-
+    public BinaryInt mult(BinaryInt bin) throws BinaryArrayException {
+        
+        if(this.original==0||bin.original==0){
+            return new BinaryInt(0,this.bitSize);
+        }
+        
         //Verifiy if result is negative
         boolean isNegative = this.signed != bin.signed;
 

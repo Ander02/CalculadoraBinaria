@@ -4,6 +4,7 @@ import binary.BinaryFloat;
 import binary.BinaryInt;
 import binary.IntDivisionResult;
 import exception.BinaryArrayException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -17,7 +18,8 @@ public class Main {
      * @throws exception.BinaryArrayException
      */
     public static void main(String[] args) throws BinaryArrayException {
-
+        
+        
         try {
             Main.printHeader();
 
@@ -30,6 +32,7 @@ public class Main {
             Main.printMenu();
             int typeOption;
             do {
+                
                 typeOption = Main.requestInt();
 
                 switch (typeOption) {
@@ -108,7 +111,7 @@ public class Main {
 
                                     float1 = Main.requestBinaryFloatNumber("primeiro");
                                     float2 = Main.requestBinaryFloatNumber("segundo");
-                                    BinaryFloat mult = float1.floatSum(float2);
+                                    BinaryFloat mult = float1.floatMul(float2);
 
                                     Main.printBinaryFloatResult(mult, "multiplicação");
                                     break;
@@ -116,7 +119,7 @@ public class Main {
 
                                     float1 = Main.requestBinaryFloatNumber("primeiro");
                                     float2 = Main.requestBinaryFloatNumber("segundo");
-                                    BinaryFloat div = float1.floatSum(float2);
+                                    BinaryFloat div = float1.floatDiv(float2);
 
                                     Main.printBinaryFloatResult(div, "divisão");
                                     break;
@@ -175,11 +178,11 @@ public class Main {
         }
     }
 
-    private static float requestFloat() {
+    private static double requestFloat() {
         try {
             Scanner input = new Scanner(System.in);
             System.out.print(">");
-            float num = input.nextFloat();
+            double num = input.nextDouble();
             System.out.println();
             return num;
         } catch (Exception e) {
@@ -213,7 +216,7 @@ public class Main {
 
         while (!ok) {
             System.out.println("Digite o " + order + " número em decimal");
-            float number = Main.requestFloat();
+            double number = Main.requestFloat();
 
             System.out.println("Digite a precisão desse número");
             int precision = Main.requestInt();
@@ -236,10 +239,10 @@ public class Main {
 
     }
 
-    private static void printBinaryFloatResult(BinaryFloat bin, String operation) {
+    private static void printBinaryFloatResult(BinaryFloat bin, String operation) throws BinaryArrayException {
         System.out.println("O resuldado da " + operation + " foi: ");
 
-        System.out.println(bin);
+        System.out.println(Arrays.toString(bin.binaryNumber)+"* 2^"+(bin.exp-128)+" = "+bin.floatToDouble());
         System.out.println();
 
     }

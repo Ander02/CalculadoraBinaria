@@ -14,12 +14,15 @@ public class BinaryFloat extends BinaryInt {
     public double original;
 
     public BinaryFloat(double x, int y) throws BinaryArrayException {
-        super(y);
+        //super(y);
         this.original = x;
         this.bitSize = y;
-        this.binaryNumber = toFloat(x, y);
+        this.binaryNumber = toFloat(Math.abs(x), y);
         if (x >= 0) {
             this.signed = false;
+        }
+        if(x < 0){
+            this.signed = true;
         }
 
     }
@@ -104,9 +107,9 @@ public class BinaryFloat extends BinaryInt {
             }
         }
 
-        System.out.println(count);
+        //System.out.println(count);
 
-        System.out.println("Antes: " + Arrays.toString(intPartA) + "   " + Arrays.toString(intPartB));
+        //System.out.println("Antes: " + Arrays.toString(intPartA) + "   " + Arrays.toString(intPartB));
 
         if (intPart > 0) {
             count = y - count - 1;
@@ -120,11 +123,11 @@ public class BinaryFloat extends BinaryInt {
             contAux++;
         }
 
-        System.out.println("Depois: " + Arrays.toString(intPartA) + "   " + Arrays.toString(intPartB));
+        //System.out.println("Depois: " + Arrays.toString(intPartA) + "   " + Arrays.toString(intPartB));
 
         count = 0;
         while (floatPart != 0 && count <= floatPartA.length - 1) { //Parte quebrada do binário
-            System.out.println(floatPart);
+            //System.out.println(floatPart);
             floatPart *= 2;
             if (floatPart >= 1) {
                 floatPartA[count] = true;
@@ -135,7 +138,7 @@ public class BinaryFloat extends BinaryInt {
             count++;
         }
 
-        System.out.println("Float Part Antes :" + Arrays.toString(floatPartA));
+        //System.out.println("Float Part Antes :" + Arrays.toString(floatPartA));
 
         if (!intPartA[y - 1]) {
             //System.out.println("test");
@@ -147,19 +150,21 @@ public class BinaryFloat extends BinaryInt {
             }
         }
 
-        System.out.println(expA);
+        //System.out.println(expA);
 
         for (int i = 0; i < expA - 128; i++) { //aplicando right shift na parte float para a soma
             //System.out.println(expA);
             rightShift(floatPartA);
         }
 
-        System.out.println("Float Part Depois :" + Arrays.toString(floatPartA));
+        //System.out.println("Float Part Depois :" + Arrays.toString(floatPartA));
 
         BinaryInt sum1 = new BinaryInt(false, intPartB);
         BinaryInt sum2 = new BinaryInt(false, floatPartA);
 
-        sum1 = sum1.sum(sum2); //Soma das 2 partes no mesmo nível de expoente.
+        sum1 = sum1.sum(sum2); //Soma das 2 partes no mesmo nível de expoente
+        
+        //System.out.println(Arrays.toString(sum1.binaryNumber)+"2^"+(expA-128));
 
         this.exp = expA;
 
@@ -167,6 +172,7 @@ public class BinaryFloat extends BinaryInt {
     }
 
     public double floatToDouble() {
+        boolean negativo = this.signed;
         int exp = this.exp;
         double result;
         double inteiro;
@@ -192,7 +198,7 @@ public class BinaryFloat extends BinaryInt {
 
         //System.out.println("Array Parte inteiro: "+Arrays.toString(intPart));
         //System.out.println("Array Parte flutuante Depois: "+Arrays.toString(this.binaryNumber));
-        BinaryInt aux = new BinaryInt(this.signed, intPart);
+        BinaryInt aux = new BinaryInt(false, intPart);
 
         inteiro = (double) aux.toInt();
 
@@ -204,16 +210,17 @@ public class BinaryFloat extends BinaryInt {
 
         result = inteiro + flutuante;
 
-        System.out.println("Inteiro: " + inteiro);
-        System.out.println("Flutuante: " + flutuante);
+       if(negativo){
+           return -result;
+       }
 
         return result;
 
     }
 
     public BinaryFloat floatSum(BinaryFloat bin) throws BinaryArrayException {
-        System.out.println("Bin: " + Arrays.toString(bin.binaryNumber));
-        System.out.println("This: " + Arrays.toString(this.binaryNumber));
+        //System.out.println("Bin: " + Arrays.toString(bin.binaryNumber));
+        //System.out.println("This: " + Arrays.toString(this.binaryNumber));
         boolean igual = (this.exp == bin.exp);
         if (this.exp > bin.exp) {
             bin.rightShift();
@@ -247,72 +254,250 @@ public class BinaryFloat extends BinaryInt {
             return new BinaryFloat(false, res, res.length, this.exp); //return caso aconteça overflow e precise adicionar 1 ao expoente e um rightShift.
         }
 
+        //System.out.println(Arrays.toString(res)+"2^"+(this.exp-128));
         BinaryFloat ret = new BinaryFloat(false, res, res.length, this.exp); //apenas para teste, retornar com o sinal adequado. Atualemente retorna o valor certo em qualquer instância positiva.
 
         return ret;
     }
 
-    public BinaryFloat floatSub(BinaryFloat bin) {
-        int norm = Math.abs(this.exp - bin.exp);
-        System.out.println("Bin: " + Arrays.toString(bin.binaryNumber));
-        System.out.println("This: " + Arrays.toString(this.binaryNumber));
+    public BinaryFloat floatSub(BinaryFloat bin) throws BinaryArrayException{
+        //System.out.println("Bin: "+Arrays.toString(bin.binaryNumber));
+        //System.out.println("This: "+Arrays.toString(this.binaryNumber));
+        
+        //boolean extraShift = (bin.floatPart()>this.floatPart());
+        boolean overflowCheck = false;
+        boolean[] implicitA = new boolean[this.bitSize];
+        boolean[] implicitB = new boolean[this.bitSize];
+  
         int count = 0;
         int count2 = 0;
-        boolean igual = (this.exp == bin.exp);
-        boolean negativo = (bin.exp > this.exp);
-        if (this.exp > bin.exp) {
+        boolean igual = (this.exp==bin.exp);
+        boolean negativo = (bin.exp>this.exp);
+        if(this.exp>bin.exp){
             bin.rightShift();
             bin.binaryNumber[0] = true;
-            while (bin.exp != this.exp) {
+            implicitA[this.bitSize-1]=true;
+            implicitB[this.bitSize-1]=false;
+            while(bin.exp!=this.exp){
                 bin.rightShift();
             }
         }
-        if (bin.exp > this.exp) {
+        if(bin.exp>this.exp){
             this.rightShift();
             this.binaryNumber[0] = true;
-            while (this.exp != bin.exp) {
+            implicitA[this.bitSize-1]=false;
+            implicitB[this.bitSize-1]=true;
+            while(this.exp!=bin.exp){
                 this.rightShift();
             }
         }
-
+        
+        int exp = this.exp;
         boolean[] mant1 = this.binaryNumber;
         boolean[] mant2 = complementOfOne(bin.binaryNumber);
-        boolean[] one = new boolean[this.bitSize];
-        one[this.bitSize - 1] = true;
-        mant2 = sumIgnoringOverflow(mant2, one);
-        boolean[] res = sumIgnoringOverflow(mant1, mant2);
-
-        System.out.println("mantissa 1: " + Arrays.toString(mant1));
-        System.out.println("mantissa 2: " + Arrays.toString(mant2));
-        System.out.println("result :" + Arrays.toString(res));
-
-        if (igual) {
-            while (!mant1[count] && count == this.bitSize - 1) {
-                count++;
-            }
-
-            while (!bin.binaryNumber[count2] && count2 == bin.bitSize - 1) {
-                count2++;
-            }
-
-            if (count > count2) {
-                negativo = true;
-            }
+        boolean[] one = new boolean[this.bitSize]; one[this.bitSize-1] = true;
+        mant2 = sumIgnoringOverflow(mant2,one);
+        boolean[] res = sumIgnoringOverflow(mant1,mant2);
+        
+        
+        implicitB = complementOfOne(implicitB);
+        implicitB = sumIgnoringOverflow(implicitB,one);
+        boolean[] implicitR = sumIgnoringOverflow(implicitA,implicitB);
+        
+         if(mant1[0]||mant2[0]){
+            overflowCheck = true;
         }
-
-        if (!negativo) { //normalizar, incompleto. Para qualquer valor que não precise de normalização o valor é correto. Não achei um jeito de fazer detectar quando precisa de left shifts
+        
+        
+        //System.out.println("float 1: "+Arrays.toString(implicitA)+Arrays.toString(mant1)+" 2^"+(this.exp-128));
+        //System.out.println("float 2: "+Arrays.toString(implicitB)+Arrays.toString(mant2)+" 2^"+(bin.exp-128));
+        //System.out.println("result :"+Arrays.toString(implicitR)+Arrays.toString(res));
+        
+        
+        
+        while(!mant1[count]&&count==this.bitSize-1){
+            count++;
+        }
+        
+        while(!bin.binaryNumber[count2]&&count2==bin.bitSize-1){
+            count2++;
+        }
+        
+        if(igual){
+        if(count>count2)
+            negativo=true;}
+        
+        
+        
+        
+        if((overflowCheck&&res[0])||!overflowCheck){
+        boolean aux = implicitB[this.bitSize-1];
+        while(!aux){
+            aux = res[0]; 
+            exp--;
+            leftShift(res);
+        }
+        }
+        
+        
+        /*if(overflowCheck&&res[0]){
+            System.out.println("test");
+            boolean aux2 = false;
+            while(!aux){
+                aux = res[0];
+                exp--;
+                leftShift(res);
+            }
+        }*/
+        
+        
+        /*if(!negativo){ //normalizar, incompleto. Para qualquer valor que não precise de normalização o valor é correto. Não achei um jeito de fazer detectar quando precisa de left shifts
             for (int i = 0; i < norm; i++) {
                 System.out.println("test");
                 this.exp--;
                 leftShift(res);
             }
+        }*/
+        
+        
+        if(negativo){
+            return new BinaryFloat(true,res,res.length,exp);
         }
-
-        if (negativo) {
-            return new BinaryFloat(true, res, res.length, this.exp);
+        
+        
+        
+        return new BinaryFloat(false,res,res.length,exp);
+    }
+    
+    public BinaryFloat floatMul(BinaryFloat bin) throws BinaryArrayException{  
+            boolean negativo = (this.signed!=bin.signed);
+            boolean[] mant1 = this.binaryNumber;
+            boolean[] mant2 = bin.binaryNumber;
+            int exp = (this.exp+bin.exp)-128;
+            
+            //System.out.println(this.exp);
+            //System.out.println(bin.exp);
+            
+            
+            boolean overflowCheck = (mant1[0]||mant2[0]);
+            
+            rightShift(mant1);
+            rightShift(mant2);
+            
+            mant1[0] = true;
+            mant2[0] = true;
+            
+            BinaryInt mu1 = new BinaryInt(false,mant1);
+            BinaryInt mu2 = new BinaryInt(false,mant2);
+            boolean[] res1 = mu2.mult(mu1).binaryNumber;
+            boolean[] res2 = new boolean[this.bitSize];
+            
+            
+            
+            //System.out.println(Arrays.toString(mu1.binaryNumber));
+            //System.out.println(Arrays.toString(mu2.binaryNumber));
+            //System.out.println(Arrays.toString(res1));          
+            
+            int i = 0;
+            while(!res1[i]){
+                i++;
+            }
+            
+            for (int j = 0; j < this.bitSize; j++) {
+                res2[j] = res1[i+j];
         }
+            
+            //System.out.println(Arrays.toString(res2));
+            
+            leftShift(res2);
+            
+            if (overflowCheck&&!res2[0]){
+                //rightShift(res2);
+                exp++;
+            }
+            
 
-        return new BinaryFloat(false, res, res.length, this.exp);
+            if(negativo){
+                return new BinaryFloat(true,res2,this.bitSize,exp);
+            }
+            
+            return new BinaryFloat(false,res2,this.bitSize,exp);
+    }
+    
+       public BinaryFloat floatDiv(BinaryFloat bin) throws BinaryArrayException {
+            boolean negativo = (this.signed!=bin.signed);
+            boolean[] mant1 = this.binaryNumber;
+            boolean[] mant2 = bin.binaryNumber;
+            int exp = (this.exp-bin.exp)+128;
+            
+            
+            rightShift(mant1);
+            rightShift(mant2);
+            
+            mant1[0] = true;
+            mant2[0] = true;
+            
+            boolean[] dividendo = new boolean[mant1.length+1];
+            boolean[] divisor = new boolean[mant2.length+1];
+            
+            for (int i = 0; i < this.bitSize-1; i++) {
+               dividendo[i+1] = mant1[i];
+               divisor[i+1] = mant2[i];
+           }
+            
+            boolean[] one = new boolean[divisor.length];
+            one[one.length-1]=true;
+            divisor = complementOfOne(divisor);
+            divisor = sumIgnoringOverflow(divisor, one);
+            
+            int count = 0;
+            boolean isZero = false;
+            boolean[] atual = dividendo;
+            boolean[] parcial;
+            boolean[] result = new boolean[this.bitSize];
+            //System.out.println("DIVIDENDO :"+Arrays.toString(dividendo));
+            //System.out.println("DIVISOR :"+Arrays.toString(divisor));
+            while(!isZero&&count<this.bitSize){
+                //System.out.println(count);
+                isZero = true;
+                parcial = sumIgnoringOverflow(atual,divisor);
+                //System.out.println("Parcial "+count+" "+Arrays.toString(parcial));
+                
+                for (int i = 0; i < this.bitSize+1; i++) {
+                    if (parcial[i]) {
+                        isZero = false;
+                    }
+                }
+                //System.out.println(isZero);
+                
+                if (parcial[0]){
+                    leftShift(atual);
+                    result[count] = false;
+                }
+                else{
+                    atual = parcial;
+                    leftShift(atual);
+                    result[count] = true;
+                }
+                count++;
+            }
+            
+            //System.out.println("RESULTADO: "+Arrays.toString(result));
+            
+            boolean shifts = result[0];                
+            leftShift(result);
+            while(!shifts){
+                leftShift(result);
+                shifts = result[0];
+                exp--;
+            }
+            
+            
+            if(negativo){
+                return new BinaryFloat(true,result,this.bitSize,exp);
+            }
+            
+            return new BinaryFloat(false,result,this.bitSize,exp);
     }
 
     @Override
