@@ -92,38 +92,37 @@ public class Main {
 
                                     float1 = Main.requestBinaryFloatNumber("primeiro");
                                     float2 = Main.requestBinaryFloatNumber("segundo");
-//                                    BinaryFloat sum = float1.sum(float2);
+                                    BinaryFloat sum = float1.floatSum(float2);
 
-//                                    Main.printBinaryIntResult(sum, "soma");
+                                    Main.printBinaryFloatResult(sum, "soma");
                                     break;
                                 case 1:
 
-                                    bin1 = Main.requestBinaryIntNumber("primeiro");
-                                    bin2 = Main.requestBinaryIntNumber("segundo");
-                                    BinaryInt sub = bin1.sub(bin2);
+                                    float1 = Main.requestBinaryFloatNumber("primeiro");
+                                    float2 = Main.requestBinaryFloatNumber("segundo");
+                                    BinaryFloat sub = float1.floatSub(float2);
 
-                                    Main.printBinaryIntResult(sub, "subtração");
+                                    Main.printBinaryFloatResult(sub, "subtração");
                                     break;
                                 case 2:
 
-                                    bin1 = Main.requestBinaryIntNumber("primeiro");
-                                    bin2 = Main.requestBinaryIntNumber("segundo");
-                                    BinaryInt mult = bin1.mult(bin2);
+                                    float1 = Main.requestBinaryFloatNumber("primeiro");
+                                    float2 = Main.requestBinaryFloatNumber("segundo");
+                                    BinaryFloat mult = float1.floatSum(float2);
 
-                                    Main.printBinaryIntResult(mult, "multiplicação");
+                                    Main.printBinaryFloatResult(mult, "multiplicação");
                                     break;
                                 case 3:
 
-                                    bin1 = Main.requestBinaryIntNumber("primeiro");
-                                    bin2 = Main.requestBinaryIntNumber("segundo");
-                                    IntDivisionResult divRes = bin1.div(bin2);
+                                    float1 = Main.requestBinaryFloatNumber("primeiro");
+                                    float2 = Main.requestBinaryFloatNumber("segundo");
+                                    BinaryFloat div = float1.floatSum(float2);
 
-                                    Main.printBinaryIntDivResult(divRes, "divisão");
+                                    Main.printBinaryFloatResult(div, "divisão");
                                     break;
                             }
 
                         } while (floatOperationOption >= 0);
-
                         break;
                 }
 
@@ -219,7 +218,6 @@ public class Main {
             System.out.println("Digite a precisão desse número");
             int precision = Main.requestInt();
             try {
-
                 return new BinaryFloat(number, precision);
 
             } catch (Exception e) {
@@ -231,6 +229,14 @@ public class Main {
     }
 
     private static void printBinaryIntResult(BinaryInt bin, String operation) {
+        System.out.println("O resuldado da " + operation + " foi: ");
+
+        System.out.println(bin);
+        System.out.println();
+
+    }
+
+    private static void printBinaryFloatResult(BinaryFloat bin, String operation) {
         System.out.println("O resuldado da " + operation + " foi: ");
 
         System.out.println(bin);
