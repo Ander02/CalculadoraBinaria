@@ -282,7 +282,7 @@ public class BinaryInt {
 
         BinaryInt one = new BinaryInt(1, 1);
         BinaryInt quocient = new BinaryInt(0, this.length());
-        
+
         BinaryInt rest = this.getModule();
         BinaryInt div = bin.getModule();
 
@@ -298,7 +298,6 @@ public class BinaryInt {
 
         //quocient.binaryNumber = BinaryInt.reduce(quocient.binaryNumber);
         //rest.binaryNumber = BinaryInt.reduce(rest.binaryNumber);
-
         if (isNegative) {
             quocient = BinaryInt.complementOfTwo(quocient);
             rest = BinaryInt.complementOfTwo(rest);
@@ -517,6 +516,6 @@ public class BinaryInt {
 
     @Override
     public String toString() {
-        return Arrays.toString(this.fullBynaryNumber());
+        return Arrays.toString(this.fullBynaryNumber()) + ": " + this.toInt();
     }
 }

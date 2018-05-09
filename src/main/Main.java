@@ -8,6 +8,7 @@ import binary.Util;
 import java.util.Arrays;
 import exception.BinaryArrayException;
 import binary.BinaryFloat;
+import java.util.Scanner;
 
 /**
  *
@@ -20,80 +21,145 @@ public class Main {
      * @throws exception.BinaryArrayException
      */
     public static void main(String[] args) throws BinaryArrayException {
-        /*
-        System.out.println(new SumBitAux(false, false, false));
-        System.out.println("0+0+0");
-        System.out.println(new SumBitAux(false, false, true));
-        System.out.println("0+0+1");
-        System.out.println(new SumBitAux(false, true, false));
-        System.out.println("0+1+0");
-        System.out.println(new SumBitAux(false, true, true));
-        System.out.println("0+1+1");
-        System.out.println(new SumBitAux(true, false, false));
-        System.out.println("1+0+0");
-        System.out.println(new SumBitAux(true, false, true));
-        System.out.println("1+0+1");
-        System.out.println(new SumBitAux(true, true, false));
-        System.out.println("1+1+0");
-        System.out.println(new SumBitAux(true, true, true));
-        System.out.println("1+1+1");
-         */
 
- /*for (int i = 0; i < 10; i++) {
-            BinaryInt bin = new BinaryInt(i);
-            bin.sum(new BinaryInt(1)).toInt();
-        }*/
-        //BinaryInt test = Util.complementoDeUm(bin);
-        //BinaryInt test2 = Util.complementoDeDois(bin);
-        BinaryInt bin = new BinaryInt(73, 7);
+        Main.printHeader();
 
-        BinaryInt bin2 = new BinaryInt(-8, 7);
-        //System.out.println(bin2 + ": " + bin2.toInt());
-        BinaryInt res;
-        IntDivisionResult divRes;
+        Scanner input = new Scanner(System.in);
+
+        BinaryInt bin1;
+        BinaryInt bin2;
+
+        Main.printMenu();
+        int typeOption = -1;
+        do {
+            typeOption = Main.requestInt();
+
+            switch (typeOption) {
+                //Inteiros
+                case 0:
+                    int operationOption = -1;
+                    do {
+
+                        Main.printOperationsOption("Inteiro");
+
+                        operationOption = Main.requestInt();
+
+                        switch (operationOption) {
+                            case 0:
+
+                                bin1 = Main.requestBinaryNumber("primeiro");
+                                bin2 = Main.requestBinaryNumber("segundo");
+                                BinaryInt sum = bin1.sum(bin2);
+
+                                Main.printBinaryIntResult(sum, "soma");
+                                break;
+                            case 1:
+
+                                bin1 = Main.requestBinaryNumber("primeiro");
+                                bin2 = Main.requestBinaryNumber("segundo");
+                                BinaryInt sub = bin1.sub(bin2);
+
+                                Main.printBinaryIntResult(sub, "subtração");
+                                break;
+                            case 2:
+
+                                bin1 = Main.requestBinaryNumber("primeiro");
+                                bin2 = Main.requestBinaryNumber("segundo");
+                                BinaryInt mult = bin1.mult(bin2);
+
+                                Main.printBinaryIntResult(mult, "multiplicação");
+                                break;
+                            case 3:
+
+                                bin1 = Main.requestBinaryNumber("primeiro");
+                                bin2 = Main.requestBinaryNumber("segundo");
+                                BinaryInt div = bin1.mult(bin2);
+
+                                Main.printBinaryIntResult(div, "divisão");
+                                break;
+                        }
+
+                    } while (operationOption > 0);
+                    break;
+
+                //Floats
+                case 1:
+
+                    break;
+            }
+
+        } while (typeOption > 0);
+
+        Main.sayGoodBye();
+
         try {
-            res = bin.sum(bin2);
-            System.out.println("Depois da soma " + res + " " + res.toInt());
 
-            res = bin.sub(bin2);
-            System.out.println("Depois da subtração " + res + " " + res.toInt());
-            res = bin.mult(bin2);
-            System.out.println("Depois da multiplicação " + res + " " + res.toInt());
-            divRes = bin.div(bin2);
-            System.out.println(divRes);
-            //res = bin.mult(bin2);
-            //System.out.println("Depois da multiplicação " + res + " " + res.toInt());
-        } catch (Exception ex) {
-            //System.out.println("Valor Somado: "+Arrays.toString(bin.fullBynaryNumber()));
-            ex.printStackTrace();
+        } catch (Exception e) {
+
+        }
+    }
+
+    private static void printHeader() {
+        System.out.println("Bem vindo à Calculadora Binária");
+        System.out.println("Anderson Pessoa & Marcus Vinicius");
+        System.out.println();
+    }
+
+    private static void printMenu() {
+        System.out.println("Que tipo de operações você gostaria de fazer?");
+        System.out.println("0 - Com Inteiros");
+        System.out.println("1 - Com Floats");
+        System.out.println("-1 - Sair");
+    }
+
+    private static void sayGoodBye() {
+        System.out.println("Good bye!");
+    }
+
+    private static void printOperationsOption(String type) {
+        System.out.println("Você escolheu: " + type);
+        System.out.println("O que você gostaria de fazer?");
+        System.out.println("0 - Somar");
+        System.out.println("1 - Subtrair");
+        System.out.println("2 - Multiplicar");
+        System.out.println("3 - Dividir");
+        System.out.println("-1 - Sair");
+    }
+
+    private static int requestInt() {
+
+        try {
+            Scanner input = new Scanner(System.in);
+            System.out.print(">");
+            int num = input.nextInt();
+            System.out.println();
+            return num;
+        } catch (Exception e) {
+            return -1;
         }
 
-        //System.out.println("Array Original:   "+Arrays.toString(bin.fullBynaryNumber()));
-        //System.out.println("Teste de Subtração :"+Arrays.toString(sub.fullBynaryNumber()));
-        //System.out.println("Complemento de 1: "+Arrays.toString(test.fullBynaryNumber()));
-        //System.out.println("Complemento de 2: "+Arrays.toString(test2.fullBynaryNumber()));
-        //System.out.println("Resposta : "+sub.toInt());
-        //System.out.println(soma);
-        //System.out.println(soma.sum(bin3));
-        /*boolean[] bin;
-        try {
-            bin = BinaryInt.toBinary(255,8);
-            System.out.println(Arrays.toString(bin));
-            bin = BinaryInt.toBinary(256, 9);
-            System.out.println(Arrays.toString(bin));
-            bin = BinaryInt.toBinary(256, 8);
-            System.out.println(Arrays.toString(bin));
-        }
-        
-        catch (BinaryArrayException ex){
-                System.out.println(ex.message);
-                }*/
+    }
+
+    private static BinaryInt requestBinaryNumber(String order) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Digite o " + order + " número em decimal");
+        System.out.print(">");
+        int num1 = input.nextInt();
+
+        System.out.println("Digite o tamanho em bits desse número");
+        System.out.print(">");
+
+        int bitSize1 = input.nextInt();
+
+        return new BinaryInt(num1, bitSize1);
+    }
+
+    private static void printBinaryIntResult(BinaryInt bin, String operation) {
+        System.out.println("O resuldado da " + operation + " foi: ");
+
+        System.out.println(bin);
+        System.out.println();
+
     }
 }
-
-/* To do list:
-        Escrever os códigos da multiplicação e divisão. (Ainda tenho que ver oq fazer até lá)
-        Terminar a classe do binary float (modificar ela e sobreescrever parte de alguns métodos e ajustar para usar os métodos implementados.)
-        PS. Não encontrei nenhum problema nos métodos com os números que eu testei no momento, o NULL pointer exception com numeros negativos se da
-            pelo fato de um arranjo não ser iniciado no construtor pela falta do complemento de 2 não ter sido ajustado ainda.
- */
