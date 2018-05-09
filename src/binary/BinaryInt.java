@@ -429,6 +429,14 @@ public class BinaryInt {
 
         return BinaryInt.sumIgnoringOverflow(binary, one);
     }
+    
+    public BinaryInt getModulo(BinaryInt bin){
+        if (!bin.signed)
+            return bin;
+        BinaryInt aux = new BinaryInt(Math.abs(bin.original),bin.bitSize);
+        
+        return aux;
+    }
 
     @Override
     public String toString() {

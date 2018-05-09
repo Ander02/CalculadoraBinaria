@@ -42,14 +42,16 @@ public class Main {
         }*/
         
         
- 
-        BinaryFloat aux = new BinaryFloat(0.55,100);
-        BinaryFloat sum = new BinaryFloat(0.25,100);
-        BinaryFloat res = sum.floatSum(aux);
+               
+        BinaryFloat aux = new BinaryFloat(12.05,100);
+        BinaryFloat sum = new BinaryFloat(12.05,100);
+        BinaryFloat res = sum.floatMul(aux);
         
         
-        System.out.println("expoente: "+(res.exp-128));
-        System.out.println(Arrays.toString(res.binaryNumber));
+        //System.out.println("test: "+Arrays.toString(test.binaryNumber));
+        
+        //System.out.println("expoente: "+(res.exp-128));
+        //System.out.println(Arrays.toString(res.binaryNumber));
         System.out.println(res.floatToDouble());
         //System.out.println(Arrays.toString(aux));
         //BinaryInt test = Util.complementoDeUm(bin);
