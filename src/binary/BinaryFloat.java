@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package binary;
 
 import exception.BinaryArrayException;
@@ -10,7 +5,8 @@ import java.util.Arrays;
 
 /**
  *
- * @author Vera
+ * @author Anderson Pessoa
+ * @author Marcus Vinicius
  */
 public class BinaryFloat extends BinaryInt {
 

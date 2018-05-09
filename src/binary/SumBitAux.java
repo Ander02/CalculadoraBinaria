@@ -2,21 +2,25 @@ package binary;
 
 /**
  *
- * @author Anderson
+ * @author Anderson Pessoa
+ * @author Marcus Vinicius
  */
 public class SumBitAux {
 
+    //Attributes
     private boolean result;
     private boolean carry;
 
     public SumBitAux() {
     }
 
+    //Setter
     private void setSumResult(boolean carry, boolean result) {
         this.result = result;
         this.carry = carry;
     }
 
+    //Main constructor
     public SumBitAux(boolean bit1, boolean bit2, boolean carry) {
 
         if (bit1 == true) {
@@ -68,6 +72,7 @@ public class SumBitAux {
         }
     }
 
+    //Getters
     public boolean getResult() {
         return this.result;
     }

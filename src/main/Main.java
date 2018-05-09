@@ -3,11 +3,6 @@ package main;
 import binary.BinaryInt;
 import binary.IntDivisionResult;
 import exception.BinaryArrayException;
-import binary.SumBitAux;
-import binary.Util;
-import java.util.Arrays;
-import exception.BinaryArrayException;
-import binary.BinaryFloat;
 import java.util.Scanner;
 
 /**
@@ -22,80 +17,76 @@ public class Main {
      */
     public static void main(String[] args) throws BinaryArrayException {
 
-        Main.printHeader();
-
-        Scanner input = new Scanner(System.in);
-
-        BinaryInt bin1;
-        BinaryInt bin2;
-
-        Main.printMenu();
-        int typeOption = -1;
-        do {
-            typeOption = Main.requestInt();
-
-            switch (typeOption) {
-                //Inteiros
-                case 0:
-                    int operationOption = -1;
-                    do {
-
-                        Main.printOperationsOption("Inteiro");
-
-                        operationOption = Main.requestInt();
-
-                        switch (operationOption) {
-                            case 0:
-
-                                bin1 = Main.requestBinaryNumber("primeiro");
-                                bin2 = Main.requestBinaryNumber("segundo");
-                                BinaryInt sum = bin1.sum(bin2);
-
-                                Main.printBinaryIntResult(sum, "soma");
-                                break;
-                            case 1:
-
-                                bin1 = Main.requestBinaryNumber("primeiro");
-                                bin2 = Main.requestBinaryNumber("segundo");
-                                BinaryInt sub = bin1.sub(bin2);
-
-                                Main.printBinaryIntResult(sub, "subtração");
-                                break;
-                            case 2:
-
-                                bin1 = Main.requestBinaryNumber("primeiro");
-                                bin2 = Main.requestBinaryNumber("segundo");
-                                BinaryInt mult = bin1.mult(bin2);
-
-                                Main.printBinaryIntResult(mult, "multiplicação");
-                                break;
-                            case 3:
-
-                                bin1 = Main.requestBinaryNumber("primeiro");
-                                bin2 = Main.requestBinaryNumber("segundo");
-                                BinaryInt div = bin1.mult(bin2);
-
-                                Main.printBinaryIntResult(div, "divisão");
-                                break;
-                        }
-
-                    } while (operationOption > 0);
-                    break;
-
-                //Floats
-                case 1:
-
-                    break;
-            }
-
-        } while (typeOption > 0);
-
-        Main.sayGoodBye();
-
         try {
+            Main.printHeader();
+
+            BinaryInt bin1;
+            BinaryInt bin2;
+
+            Main.printMenu();
+            int typeOption;
+            do {
+                typeOption = Main.requestInt();
+
+                switch (typeOption) {
+                    //Inteiros
+                    case 0:
+                        int operationOption;
+                        do {
+                            Main.printOperationsOptions("Inteiro");
+
+                            operationOption = Main.requestInt();
+
+                            switch (operationOption) {
+                                case 0:
+
+                                    bin1 = Main.requestBinaryNumber("primeiro");
+                                    bin2 = Main.requestBinaryNumber("segundo");
+                                    BinaryInt sum = bin1.sum(bin2);
+
+                                    Main.printBinaryIntResult(sum, "soma");
+                                    break;
+                                case 1:
+
+                                    bin1 = Main.requestBinaryNumber("primeiro");
+                                    bin2 = Main.requestBinaryNumber("segundo");
+                                    BinaryInt sub = bin1.sub(bin2);
+
+                                    Main.printBinaryIntResult(sub, "subtração");
+                                    break;
+                                case 2:
+
+                                    bin1 = Main.requestBinaryNumber("primeiro");
+                                    bin2 = Main.requestBinaryNumber("segundo");
+                                    BinaryInt mult = bin1.mult(bin2);
+
+                                    Main.printBinaryIntResult(mult, "multiplicação");
+                                    break;
+                                case 3:
+
+                                    bin1 = Main.requestBinaryNumber("primeiro");
+                                    bin2 = Main.requestBinaryNumber("segundo");
+                                    IntDivisionResult divRes = bin1.div(bin2);
+
+                                    Main.printBinaryIntDivResult(divRes, "divisão");
+                                    break;
+                            }
+
+                        } while (operationOption > 0);
+                        break;
+
+                    //Floats
+                    case 1:
+
+                        break;
+                }
+
+            } while (typeOption > 0);
+
+            Main.sayGoodBye();
 
         } catch (Exception e) {
-
+            System.out.println("Ocorreu um erro: " + e.getMessage());
         }
     }
 
@@ -116,7 +107,7 @@ public class Main {
         System.out.println("Good bye!");
     }
 
-    private static void printOperationsOption(String type) {
+    private static void printOperationsOptions(String type) {
         System.out.println("Você escolheu: " + type);
         System.out.println("O que você gostaria de fazer?");
         System.out.println("0 - Somar");
@@ -141,24 +132,39 @@ public class Main {
     }
 
     private static BinaryInt requestBinaryNumber(String order) {
-        Scanner input = new Scanner(System.in);
+        //Scanner input = new Scanner(System.in);
+        boolean ok = false;
 
-        System.out.println("Digite o " + order + " número em decimal");
-        System.out.print(">");
-        int num1 = input.nextInt();
+        while (!ok) {
+            System.out.println("Digite o " + order + " número em decimal");
+            int num1 = Main.requestInt();
 
-        System.out.println("Digite o tamanho em bits desse número");
-        System.out.print(">");
+            System.out.println("Digite o tamanho em bits desse número");
+            int bitSize1 = Main.requestInt();
+            try {
 
-        int bitSize1 = input.nextInt();
+                return new BinaryInt(num1, bitSize1);
 
-        return new BinaryInt(num1, bitSize1);
+            } catch (Exception e) {
+                System.out.println("Ocorreu um problema, tente novamente");
+                ok = false;
+            }
+        }
+        return null;
     }
 
     private static void printBinaryIntResult(BinaryInt bin, String operation) {
         System.out.println("O resuldado da " + operation + " foi: ");
 
         System.out.println(bin);
+        System.out.println();
+
+    }
+
+    private static void printBinaryIntDivResult(IntDivisionResult divRes, String operation) {
+        System.out.println("O resuldado da " + operation + " foi: ");
+
+        System.out.println(divRes);
         System.out.println();
 
     }

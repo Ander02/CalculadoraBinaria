@@ -37,8 +37,8 @@ public class IntDivisionResult {
 
     @Override
     public String toString() {
-        return "Quocient: " + this.quocient + ": " + this.quocient.toInt()
-                + "\nRest: " + this.rest + ":" + this.rest.toInt();
+        return "Quocient: " + this.quocient
+                + "\nRest: " + this.rest;
     }
 
 }
