@@ -209,6 +209,7 @@ public class BinaryInt {
      */
     public BinaryInt mult(BinaryInt bin) throws BinaryArrayException {
         
+        //Verify if one of the numbers is 0
         if(this.original==0||bin.original==0){
             return new BinaryInt(0,this.bitSize);
         }
@@ -307,6 +308,14 @@ public class BinaryInt {
      * @throws BinaryArrayException
      */
     public IntDivisionResult div(BinaryInt bin) throws BinaryArrayException {
+        
+        if(this.original==0){
+            return new IntDivisionResult(new BinaryInt(0,this.bitSize),new BinaryInt(0,this.bitSize));
+        }
+        
+        if(bin.original==0){
+            throw new BinaryArrayException("Divisão por 0");
+        }
 
         //Verify if is negative
         boolean isNegative = this.signed != bin.signed;

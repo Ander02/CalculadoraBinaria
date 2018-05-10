@@ -17,8 +17,7 @@ public class Main {
      * @param args the command line arguments
      * @throws exception.BinaryArrayException
      */
-    public static void main(String[] args) throws BinaryArrayException {
-        
+    public static void main(String[] args) throws BinaryArrayException {        
         
         try {
             Main.printHeader();
